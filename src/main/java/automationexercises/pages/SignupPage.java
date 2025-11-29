@@ -1,195 +1,223 @@
 package automationexercises.pages;
 
 import automationexercises.pages.components.NavigationBarComponent;
-import automationexercises.utils.actions.PageActions;
+import automationexercises.utils.logs.LogsManager;
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 
 public class SignupPage {
 
-    private final Page page;
-    private final PageActions pageActions;
-    public NavigationBarComponent navigationBar;
+    private Page page;
+
+    // Locators
+    private final Locator titleMr;
+    private final Locator titleMrs;
+    private final Locator name;
+    private final Locator email;
+    private final Locator password;
+    // Birthdate
+    private final Locator day;
+    private final Locator month;
+    private final Locator year;
+    // Checkboxes
+    private final Locator newsletter;
+    private final Locator specialOffers;
+    // Personal Information
+    private final Locator firstName;
+    private final Locator lastName;
+    private final Locator company;
+    private final Locator address1;
+    private final Locator address2;
+    private final Locator country;
+    private final Locator state;
+    private final Locator city;
+    private final Locator zipcode;
+    private final Locator mobileNumber;
+    private final Locator createAccountButton;
+    private final Locator accountCreatedLabel;
+    private final Locator continueButton;
 
     public SignupPage(Page page) {
         this.page = page;
-        this.pageActions = new PageActions(page);
-        this.navigationBar = new NavigationBarComponent(page);
+
+        // Locators initialization
+        this.titleMr = page.locator("#uniform-id_gender1");
+        this.titleMrs = page.locator("#uniform-id_gender2");
+        this.name = page.locator("[data-qa='name']");
+        this.email = page.locator("[data-qa='email']");
+        this.password = page.locator("#password");
+
+        // Birthdate
+        this.day = page.locator("#days");
+        this.month = page.locator("#months");
+        this.year = page.locator("#years");
+
+        // Checkboxes
+        this.newsletter = page.locator("#newsletter");
+        this.specialOffers = page.locator("#optin");
+
+        // Personal Information
+        this.firstName = page.locator("#first_name");
+        this.lastName = page.locator("#last_name");
+        this.company = page.locator("#company");
+        this.address1 = page.locator("#address1");
+        this.address2 = page.locator("#address2");
+        this.country = page.locator("#country");
+        this.state = page.locator("#state");
+        this.city = page.locator("#city");
+        this.zipcode = page.locator("#zipcode");
+        this.mobileNumber = page.locator("#mobile_number");
+
+        this.createAccountButton = page.locator("[data-qa='create-account']");
+        this.accountCreatedLabel = page.locator("p").first();
+        this.continueButton = page.locator("[data-qa='continue-button']");
     }
 
-    // Locators (Strings like your new style)
-    private String mrTitle     = "#uniform-id_gender1";
-    private String mrsTitle    = "#uniform-id_gender2";
-    private String name        = "[data-qa=\"name\"]";
-    private String email       = "[data-qa=\"email\"]";
-    private String password    = "#password";
-    private String day         = "#days";
-    private String month       = "#months";
-    private String year        = "#years";
-    private String newsletter  = "#newsletter";
-    private String specialOffers = "#optin";
-
-    // Address info
-    private String firstName   = "#first_name";
-    private String lastName    = "#last_name";
-    private String company     = "#company";
-    private String address1    = "#address1";
-    private String address2    = "#address2";
-    private String country     = "#country";
-    private String state       = "#state";
-    private String city        = "#city";
-    private String zipcode     = "#zipcode";
-    private String mobileNumber = "#mobile_number";
-
-    private String createAccountButton = "[data-qa=\"create-account\"]";
-    private String accountCreatedLabel = "p";
-    private String continueButton      = "[data-qa=\"continue-button\"]";
-
-
     // Actions
-    @Step("Choose title: {title}")
-    public SignupPage chooseTitle(String title) {
-        switch (title.toLowerCase()) {
+
+    @Step("Select title {title}")
+    public SignupPage selectTitle(String title){
+        switch(title.toLowerCase()){
             case "mr":
-                pageActions.find(mrTitle).click();
+                titleMr.click();
                 break;
             case "mrs":
-                pageActions.find(mrsTitle).click();
+                titleMrs.click();
                 break;
             default:
                 throw new IllegalArgumentException("Invalid title: " + title);
         }
+        LogsManager.info("Selected title: " + title);
         return this;
     }
 
-    @Step("Enter name: {userName}")
-    public SignupPage enterName(String userName) {
-        pageActions.find(name).fill(userName);
+    @Step("Enter name {username}")
+    public SignupPage enterName(String username){
+        name.fill(username);
         return this;
     }
 
-    @Step("Enter email: {userEmail}")
-    public SignupPage enterEmail(String userEmail) {
-        pageActions.find(email).fill(userEmail);
+    @Step("Enter email {userEmail}")
+    public SignupPage enterEmail(String userEmail){
+        email.fill(userEmail);
         return this;
     }
 
-    @Step("Enter password: {userPassword}")
-    public SignupPage enterPassword(String userPassword) {
-        pageActions.find(password).fill(userPassword);
+    @Step("Enter password {userPassword}")
+    public SignupPage enterPassword(String userPassword){
+        password.fill(userPassword);
         return this;
     }
 
-    @Step("Select date of birth: {day}-{month}-{year}")
-    public SignupPage selectDateOfBirth(String day, String month, String year) {
-        pageActions.find(this.day).selectOption(day);
-        pageActions.find(this.month).selectOption(month);
-        pageActions.find(this.year).selectOption(year);
+    @Step("Select Birthdate {birthDay} | {birthMonth} | {birthYear}")
+    public SignupPage selectBirtDate(String birthDay, String birthMonth, String birthYear){
+        day.selectOption(birthDay);
+        month.selectOption(birthMonth);
+        year.selectOption(birthYear);
+        LogsManager.info("Selected birthdate: " + birthDay + "/" + birthMonth + "/" + birthYear);
         return this;
     }
 
-    @Step("Subscribe to newsletter")
-    public SignupPage subscribeToNewsletter() {
-        pageActions.find(newsletter).check();
+    @Step("Select Newsletter")
+    public SignupPage selectNewsletter(){
+        newsletter.check();
         return this;
     }
 
-    @Step("Receive special offers")
-    public SignupPage receiveSpecialOffers() {
-        pageActions.find(specialOffers).check();
+    @Step("Select Special Offers")
+    public SignupPage selectSpecialOffers(){
+        specialOffers.check();
         return this;
     }
 
-    @Step("Enter first name: {firstName}")
-    public SignupPage enterFirstName(String firstName) {
-        pageActions.find(this.firstName).fill(firstName);
+    @Step("Enter First Name {firstNameValue}")
+    public SignupPage enterFirstName(String firstNameValue){
+        firstName.fill(firstNameValue);
         return this;
     }
 
-    @Step("Enter last name: {lastName}")
-    public SignupPage enterLastName(String lastName) {
-        pageActions.find(this.lastName).fill(lastName);
+    @Step("Enter Last Name {lastNameValue}")
+    public SignupPage enterLastName(String lastNameValue){
+        lastName.fill(lastNameValue);
         return this;
     }
 
-    @Step("Enter company: {company}")
-    public SignupPage enterCompany(String company) {
-        pageActions.find(this.company).fill(company);
+    @Step("Enter Company {companyValue}")
+    public SignupPage enterCompany(String companyValue){
+        company.fill(companyValue);
         return this;
     }
 
-    @Step("Enter address1: {address1}")
-    public SignupPage enterAddress1(String address1) {
-        pageActions.find(this.address1).fill(address1);
+    @Step("Enter Address 1 {address1Value}")
+    public SignupPage enterAddress1(String address1Value){
+        address1.fill(address1Value);
         return this;
     }
 
-    @Step("Enter address2: {address2}")
-    public SignupPage enterAddress2(String address2) {
-        pageActions.find(this.address2).fill(address2);
+    @Step("Enter Address 2 {address2Value}")
+    public SignupPage enterAddress2(String address2Value){
+        address2.fill(address2Value);
         return this;
     }
 
-    @Step("Select country: {country}")
-    public SignupPage selectCountry(String country) {
-        pageActions.find(this.country).selectOption(country);
+    @Step("Select Country {countryValue}")
+    public SignupPage selectCountry(String countryValue){
+        country.selectOption(countryValue);
+        LogsManager.info("Selected country: " + countryValue);
         return this;
     }
 
-    @Step("Enter state: {state}")
-    public SignupPage enterState(String state) {
-        pageActions.find(this.state).fill(state);
+    @Step("Enter State {stateValue}")
+    public SignupPage enterState(String stateValue){
+        state.fill(stateValue);
         return this;
     }
 
-    @Step("Enter city: {city}")
-    public SignupPage enterCity(String city) {
-        pageActions.find(this.city).fill(city);
+    @Step("Enter City {cityValue}")
+    public SignupPage enterCity(String cityValue){
+        city.fill(cityValue);
         return this;
     }
 
-    @Step("Enter zipcode: {zipcode}")
-    public SignupPage enterZipcode(String zipcode) {
-        pageActions.find(this.zipcode).fill(zipcode);
+    @Step("Enter Zipcode {zipcodeValue}")
+    public SignupPage enterZipcode(String zipcodeValue){
+        zipcode.fill(zipcodeValue);
         return this;
     }
 
-    @Step("Enter mobile number: {mobileNumber}")
-    public SignupPage enterMobileNumber(String mobileNumber) {
-        pageActions.find(this.mobileNumber).fill(mobileNumber);
+    @Step("Enter Mobile Number {mobileNumberValue}")
+    public SignupPage enterMobileNumber(String mobileNumberValue){
+        mobileNumber.fill(mobileNumberValue);
         return this;
     }
 
-    @Step("Click on Create Account button")
-    public SignupPage clickCreateAccountButton() {
-        pageActions.find(createAccountButton).click();
+    @Step("Click Create Account Button")
+    public SignupPage clickCreateAccountButton(){
+        createAccountButton.click();
         return this;
     }
 
-    @Step("Click on Continue button")
-    public NavigationBarComponent clickContinueButton() {
-        pageActions.find(continueButton).click();
+    @Step("Click Continue Button")
+    public NavigationBarComponent clickContinueButton(){
+        continueButton.click();
         return new NavigationBarComponent(page);
     }
 
-
     // Validations
-    @Step("Verify account created label is visible")
-    public SignupPage verifyAccountCreated() {
-        Assertions.assertTrue(
-                pageActions.find(accountCreatedLabel).nth(0).isVisible(),
-                "Account Created label is NOT visible"
-        );
+
+    @Step("Verify Account Created Label is visible")
+    public SignupPage verifyAccountCreatedLabel(){
+        Assertions.assertTrue(accountCreatedLabel.isVisible(),
+                "The Account Created label is not visible.");
         return this;
     }
 
-    @Step("Verify user is on signup page")
-    public SignupPage verifyOnSignupPage() {
-        Assertions.assertTrue(
-                pageActions.find(createAccountButton).isVisible(),
-                "User is NOT on signup page"
-        );
+    @Step("Verify Account Not Created")
+    public SignupPage verifyAccountNotCreated(){
+        Assertions.assertTrue(accountCreatedLabel.isHidden(),
+                "The Account Created label should not be visible but it is.");
         return this;
     }
 }

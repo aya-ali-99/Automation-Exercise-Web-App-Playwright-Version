@@ -14,21 +14,32 @@ public class SignupLoginPage {
     public NavigationBarComponent navigationBar;
     private final String signupLoginEndPoint = "/login";
 
+    // Locators
+    private final Locator loginEmail;
+    private final Locator loginPassword;
+    private final Locator loginButton;
+    private final Locator signupName;
+    private final Locator signupEmail;
+    private final Locator signupButton;
+    private final Locator signupLabel;
+    private final Locator loginError;
+    private final Locator registerError;
+
     public SignupLoginPage(Page page) {
         this.page = page;
         this.navigationBar = new NavigationBarComponent(page);
-    }
 
-    // Locators (Playwright)
-    private final Locator loginEmail = page.locator("[data-qa='login-email']");
-    private final Locator loginPassword = page.locator("[data-qa='login-password']");
-    private final Locator loginButton = page.locator("[data-qa='login-button']");
-    private final Locator signupName = page.locator("[data-qa='signup-name']");
-    private final Locator signupEmail = page.locator("[data-qa='signup-email']");
-    private final Locator signupButton = page.locator("[data-qa='signup-button']");
-    private final Locator signupLabel = page.locator(".signup-form > h2");
-    private final Locator loginError = page.locator(".login-form p");
-    private final Locator registerError = page.locator(".signup-form p");
+        // Locators initialization
+        this.loginEmail = page.locator("[data-qa='login-email']");
+        this.loginPassword = page.locator("[data-qa='login-password']");
+        this.loginButton = page.locator("[data-qa='login-button']");
+        this.signupName = page.locator("[data-qa='signup-name']");
+        this.signupEmail = page.locator("[data-qa='signup-email']");
+        this.signupButton = page.locator("[data-qa='signup-button']");
+        this.signupLabel = page.locator(".signup-form > h2");
+        this.loginError = page.locator(".login-form p");
+        this.registerError = page.locator(".signup-form p");
+    }
 
     // Actions
 
@@ -85,7 +96,10 @@ public class SignupLoginPage {
 
     @Step("Verify login error message is {errorExpected}")
     public SignupLoginPage verifyLoginErrorMessage(String errorExpected){
+        // Ensure element is visible before grabbing text to avoid flakiness
+        Assertions.assertTrue(loginError.isVisible(), "Login error message element not visible");
         String errorActual = loginError.textContent();
+
         LogsManager.info("Verifying login error message. Actual: " + errorActual
                 + ", Expected: " + errorExpected);
         Assertions.assertEquals(errorExpected, errorActual,
@@ -96,7 +110,9 @@ public class SignupLoginPage {
 
     @Step("Verify register error message is {errorExpected}")
     public SignupLoginPage verifyRegisterErrorMessage(String errorExpected){
+        Assertions.assertTrue(registerError.isVisible(), "Register error message element not visible");
         String errorActual = registerError.textContent();
+
         LogsManager.info("Verifying register error message. Actual: " + errorActual
                 + ", Expected: " + errorExpected);
         Assertions.assertEquals(errorExpected, errorActual,
