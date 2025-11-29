@@ -1,7 +1,6 @@
 package automationexercises.base;
 
 import com.microsoft.playwright.Page;
-//import io.qameta.allure.Allure;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.AfterAll;

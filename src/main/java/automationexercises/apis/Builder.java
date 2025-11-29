@@ -14,7 +14,8 @@ public class Builder {
     }
     //build request specification
     public static RequestSpecification getUserManagementRequestSpecification(Map<String, ?> formParams) {
-        return  new RequestSpecBuilder().setBaseUri(baseURI)
+        return new RequestSpecBuilder()
+                .setBaseUri(baseURI)
                 .setContentType(ContentType.URLENC)
                 .addFormParams(formParams)
                 .build();
