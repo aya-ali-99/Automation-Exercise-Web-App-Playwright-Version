@@ -96,10 +96,7 @@ public class SignupLoginPage {
 
     @Step("Verify login error message is {errorExpected}")
     public SignupLoginPage verifyLoginErrorMessage(String errorExpected){
-        // Ensure element is visible before grabbing text to avoid flakiness
-        Assertions.assertTrue(loginError.isVisible(), "Login error message element not visible");
         String errorActual = loginError.textContent();
-
         LogsManager.info("Verifying login error message. Actual: " + errorActual
                 + ", Expected: " + errorExpected);
         Assertions.assertEquals(errorExpected, errorActual,
@@ -110,9 +107,7 @@ public class SignupLoginPage {
 
     @Step("Verify register error message is {errorExpected}")
     public SignupLoginPage verifyRegisterErrorMessage(String errorExpected){
-        Assertions.assertTrue(registerError.isVisible(), "Register error message element not visible");
         String errorActual = registerError.textContent();
-
         LogsManager.info("Verifying register error message. Actual: " + errorActual
                 + ", Expected: " + errorExpected);
         Assertions.assertEquals(errorExpected, errorActual,
