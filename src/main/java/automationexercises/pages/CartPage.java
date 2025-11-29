@@ -8,5 +8,6 @@ public class CartPage {
 
     public CartPage(Page page) {
         this.page = page;
+
     }
 }
