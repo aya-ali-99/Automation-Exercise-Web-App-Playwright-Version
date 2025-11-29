@@ -4,7 +4,6 @@ import automationexercises.apis.UserManagementAPI;
 import automationexercises.base.BaseTest;
 import automationexercises.pages.SignupLoginPage;
 import automationexercises.pages.SignupPage;
-import automationexercises.pages.components.NavigationBarComponent;
 import automationexercises.utils.TimeManager;
 import automationexercises.utils.dataReader.JsonReader;
 import io.qameta.allure.*;
