@@ -24,6 +24,7 @@
 
   "InvalidData" :
   {
+    "emptyName": "",
     "emptyEmail": "",
     "wrongEmail": "WrongEmail",
     "emptyPassword": "",
