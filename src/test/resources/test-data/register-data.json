@@ -1,0 +1,42 @@
+{
+  "titleMale": "Mr",
+  "titleFemale": "Mrs",
+  "signupName": "Automation_Test",
+  "signupEmail": "Automation_Test_",
+  "signupPassword": "password",
+  "day": "1",
+  "month": "July",
+  "year": "2000",
+  "firstName": "Automation_FirstName",
+  "lastName": "Automation_LastName",
+  "company": "Automation_Company",
+  "address1": "Automation_Address1",
+  "address2": "Automation_Address2",
+  "country": "Canada",
+  "state": "Automation_State",
+  "city": "Automation_City",
+  "zipcode": "12345",
+  "mobileNumber": "1234567890",
+  "messages" :
+  {
+    "error": "Email Address already exist!"
+  },
+
+  "InvalidData" :
+  {
+    "emptyEmail": "",
+    "wrongEmail": "WrongEmail",
+    "emptyPassword": "",
+    "emptyFirstName": "",
+    "emptyLastName": "",
+    "emptyCompany": "",
+    "emptyAddress1": "",
+    "emptyAddress2": "",
+    "emptyCountry": "",
+    "emptyState": "",
+    "emptyCity": "",
+    "emptyZipcode": "",
+    "emptyMobileNumber": ""
+
+  }
+}

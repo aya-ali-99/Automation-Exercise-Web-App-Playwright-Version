@@ -1,0 +1,7 @@
+{
+  "name": "Aya",
+  "email": "Aya@Test.com",
+  "subject": "1",
+  "message": "Testing Contatct Us Form",
+  "filePath": "src/test/resources/test-data/uploadFile.txt"
+}
