@@ -1,5 +1,6 @@
 package automationexercises.base;
 
+import automationexercises.utils.dataReader.PropertyReader;
 import com.microsoft.playwright.*;
 
 public class PlaywrightManager {
@@ -13,14 +14,16 @@ public class PlaywrightManager {
             playwright = Playwright.create();
             BrowserType.LaunchOptions options = new BrowserType.LaunchOptions();
             options.setHeadless(false);
+            options.setArgs(java.util.Arrays.asList("--start-maximized"));
             browser = playwright.chromium().launch(options);
         }
     }
 
     public static Page getPage() {
         if (page == null) {
-            context = browser.newContext();
+            context = browser.newContext(new Browser.NewContextOptions().setViewportSize(null));
             page = context.newPage();
+            page.navigate(PropertyReader.getProperty("baseUrlWeb"));
         }
         return page;
     }
