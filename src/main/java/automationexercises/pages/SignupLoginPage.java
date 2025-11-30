@@ -6,7 +6,7 @@ import automationexercises.utils.logs.LogsManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 
 public class SignupLoginPage {
 
@@ -44,43 +44,43 @@ public class SignupLoginPage {
     // Actions
 
     @Step("Navigate to Register/Login page")
-    public SignupLoginPage navigate(){
+    public SignupLoginPage navigate() {
         page.navigate(PropertyReader.getProperty("baseUrlWeb") + signupLoginEndPoint);
         return this;
     }
 
     @Step("Enter email {email} in login field")
-    public SignupLoginPage enterLoginEmail(String email){
+    public SignupLoginPage enterLoginEmail(String email) {
         loginEmail.fill(email);
         return this;
     }
 
     @Step("Enter password {password} in login field")
-    public SignupLoginPage enterLoginPassword(String password){
+    public SignupLoginPage enterLoginPassword(String password) {
         loginPassword.fill(password);
         return this;
     }
 
     @Step("Click login button")
-    public SignupLoginPage clickLoginButton(){
+    public SignupLoginPage clickLoginButton() {
         loginButton.click();
         return this;
     }
 
     @Step("Enter name {name} in signup field")
-    public SignupLoginPage enterSignupName(String name){
+    public SignupLoginPage enterSignupName(String name) {
         signupName.fill(name);
         return this;
     }
 
     @Step("Enter email {email} in signup field")
-    public SignupLoginPage enterSignupEmail(String email){
+    public SignupLoginPage enterSignupEmail(String email) {
         signupEmail.fill(email);
         return this;
     }
 
     @Step("Click signup button")
-    public SignupLoginPage clickSignupButton(){
+    public SignupLoginPage clickSignupButton() {
         signupButton.click();
         return this;
     }
@@ -88,52 +88,52 @@ public class SignupLoginPage {
     // Validations
 
     @Step("Verify signup label is visible")
-    public SignupLoginPage verifySignupLabelVisible(){
-        Assertions.assertTrue(signupLabel.isVisible(),
+    public SignupLoginPage verifySignupLabelVisible() {
+        Assert.assertTrue(signupLabel.isVisible(),
                 "The Signup label is not visible.");
         return this;
     }
 
     @Step("Verify login error message is {errorExpected}")
-    public SignupLoginPage verifyLoginErrorMessage(String errorExpected){
-        String errorActual = loginError.textContent();
+    public SignupLoginPage verifyLoginErrorMessage(String errorExpected) {
+        String errorActual = loginError.innerText();
         LogsManager.info("Verifying login error message. Actual: " + errorActual
                 + ", Expected: " + errorExpected);
-        Assertions.assertEquals(errorExpected, errorActual,
+        Assert.assertEquals(errorActual, errorExpected,
                 "Login error message is not as expected. Expected: "
                         + errorExpected + ", Actual: " + errorActual);
         return this;
     }
 
     @Step("Verify register error message is {errorExpected}")
-    public SignupLoginPage verifyRegisterErrorMessage(String errorExpected){
-        String errorActual = registerError.textContent();
+    public SignupLoginPage verifyRegisterErrorMessage(String errorExpected) {
+        String errorActual = registerError.innerText();
         LogsManager.info("Verifying register error message. Actual: " + errorActual
                 + ", Expected: " + errorExpected);
-        Assertions.assertEquals(errorExpected, errorActual,
+        Assert.assertEquals(errorActual, errorExpected,
                 "Register error message is not as expected. Expected: "
                         + errorExpected + ", Actual: " + errorActual);
         return this;
     }
 
     @Step("Verify Email field validation message appears")
-    public SignupLoginPage verifyEmailFieldValidationMessageAppears(){
+    public SignupLoginPage verifyEmailFieldValidationMessageAppears() {
         // Check if the email field has HTML5 validation triggered
         String validationMessage = (String) signupEmail.evaluate("el => el.validationMessage");
-        Assertions.assertNotNull(validationMessage,
+        Assert.assertNotNull(validationMessage,
                 "Email field validation message did not appear.");
-        Assertions.assertFalse(validationMessage.isEmpty(),
+        Assert.assertFalse(validationMessage.isEmpty(),
                 "Email field validation message is empty.");
         return this;
     }
 
     @Step("Verify Name field validation message appears")
-    public SignupLoginPage verifyNameFieldValidationMessageAppears(){
+    public SignupLoginPage verifyNameFieldValidationMessageAppears() {
         // Check if the name field has HTML5 validation triggered
         String validationMessage = (String) signupName.evaluate("el => el.validationMessage");
-        Assertions.assertNotNull(validationMessage,
+        Assert.assertNotNull(validationMessage,
                 "Name field validation message did not appear.");
-        Assertions.assertFalse(validationMessage.isEmpty(),
+        Assert.assertFalse(validationMessage.isEmpty(),
                 "Name field validation message is empty.");
         return this;
     }

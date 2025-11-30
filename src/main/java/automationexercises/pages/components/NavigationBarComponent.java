@@ -6,7 +6,7 @@ import automationexercises.utils.logs.LogsManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 
 public class NavigationBarComponent {
 
@@ -47,19 +47,19 @@ public class NavigationBarComponent {
     // Actions
 
     @Step("Navigate to the Home Page")
-    public NavigationBarComponent navigate(){
+    public NavigationBarComponent navigate() {
         page.navigate(PropertyReader.getProperty("baseUrlWeb"));
         return this;
     }
 
     @Step("Click on Home Button")
-    public NavigationBarComponent clickOnHomeButton(){
+    public NavigationBarComponent clickOnHomeButton() {
         homeButton.click();
         return this;
     }
 
     @Step("Click on Products Button")
-    public ProductsPage clickOnProductsButton(){
+    public ProductsPage clickOnProductsButton() {
         productsButton.click();
         return new ProductsPage(page);
     }
@@ -71,51 +71,50 @@ public class NavigationBarComponent {
     }
 
     @Step("Click on Logout Button")
-    public SignupLoginPage clickOnLogoutButton(){
+    public SignupLoginPage clickOnLogoutButton() {
         logoutButton.click();
         return new SignupLoginPage(page);
     }
 
     @Step("Click on Signup/Login Button")
-    public SignupLoginPage clickOnSignupLoginButton(){
+    public SignupLoginPage clickOnSignupLoginButton() {
         signupLoginButton.click();
         return new SignupLoginPage(page);
     }
 
     @Step("Click on Test Cases Button")
-    public TestCasesPage clickOnTestCasesButton(){
+    public TestCasesPage clickOnTestCasesButton() {
         testCasesButton.click();
         return new TestCasesPage(page);
     }
 
     @Step("Click on Delete Account Button")
-    public DeleteAccountPage clickOnDeleteAccountButton(){
+    public DeleteAccountPage clickOnDeleteAccountButton() {
         deleteAccountButton.click();
         return new DeleteAccountPage(page);
     }
 
     @Step("Click on ContactUs Button")
-    public ContactUsPage clickOnContactUsButton(){
+    public ContactUsPage clickOnContactUsButton() {
         contactUsButton.click();
         return new ContactUsPage(page);
     }
 
-
     // Validations
 
     @Step("Verify Home Page Label")
-    public NavigationBarComponent verifyHomePage(){
-        Assertions.assertTrue(homePageLabel.isVisible(),
+    public NavigationBarComponent verifyHomePage() {
+        Assert.assertTrue(homePageLabel.isVisible(),
                 "The Home Page label is not visible after navigation.");
         return this;
     }
 
     @Step("Verify User is Logged in")
-    public NavigationBarComponent verifyUserLabel(String expectedUser){
+    public NavigationBarComponent verifyUserLabel(String expectedUser) {
         String actualName = userLabel.textContent();
         LogsManager.info("Verifying logged in user label. Actual: " + actualName
                 + " | Expected: Logged in as " + expectedUser);
-        Assertions.assertEquals(expectedUser, actualName,
+        Assert.assertEquals(actualName, expectedUser,
                 "Logged in user label does not match expected value. Expected: "
                         + expectedUser + ", Actual: " + actualName);
         return this;
@@ -123,7 +122,7 @@ public class NavigationBarComponent {
 
     @Step("Verify that user is logged out into Login Page")
     public SignupLoginPage verifyLogoutButtonNotVisible() {
-        Assertions.assertTrue(logoutButton.isHidden(),
+        Assert.assertTrue(logoutButton.isHidden(),
                 "The Logout button is not visible.");
         return new SignupLoginPage(page);
     }

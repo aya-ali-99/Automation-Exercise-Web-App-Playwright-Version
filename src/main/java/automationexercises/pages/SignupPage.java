@@ -5,7 +5,7 @@ import automationexercises.utils.logs.LogsManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 
 public class SignupPage {
 
@@ -78,8 +78,8 @@ public class SignupPage {
     // Actions
 
     @Step("Select title {title}")
-    public SignupPage selectTitle(String title){
-        switch(title.toLowerCase()){
+    public SignupPage selectTitle(String title) {
+        switch (title.toLowerCase()) {
             case "mr":
                 titleMr.click();
                 break;
@@ -94,25 +94,25 @@ public class SignupPage {
     }
 
     @Step("Enter name {username}")
-    public SignupPage enterName(String username){
+    public SignupPage enterName(String username) {
         name.fill(username);
         return this;
     }
 
     @Step("Enter email {userEmail}")
-    public SignupPage enterEmail(String userEmail){
+    public SignupPage enterEmail(String userEmail) {
         email.fill(userEmail);
         return this;
     }
 
     @Step("Enter password {userPassword}")
-    public SignupPage enterPassword(String userPassword){
+    public SignupPage enterPassword(String userPassword) {
         password.fill(userPassword);
         return this;
     }
 
     @Step("Select Birthdate {birthDay} | {birthMonth} | {birthYear}")
-    public SignupPage selectBirtDate(String birthDay, String birthMonth, String birthYear){
+    public SignupPage selectBirtDate(String birthDay, String birthMonth, String birthYear) {
         day.selectOption(birthDay);
         month.selectOption(birthMonth);
         year.selectOption(birthYear);
@@ -121,86 +121,86 @@ public class SignupPage {
     }
 
     @Step("Select Newsletter")
-    public SignupPage selectNewsletter(){
+    public SignupPage selectNewsletter() {
         newsletter.check();
         return this;
     }
 
     @Step("Select Special Offers")
-    public SignupPage selectSpecialOffers(){
+    public SignupPage selectSpecialOffers() {
         specialOffers.check();
         return this;
     }
 
     @Step("Enter First Name {firstNameValue}")
-    public SignupPage enterFirstName(String firstNameValue){
+    public SignupPage enterFirstName(String firstNameValue) {
         firstName.fill(firstNameValue);
         return this;
     }
 
     @Step("Enter Last Name {lastNameValue}")
-    public SignupPage enterLastName(String lastNameValue){
+    public SignupPage enterLastName(String lastNameValue) {
         lastName.fill(lastNameValue);
         return this;
     }
 
     @Step("Enter Company {companyValue}")
-    public SignupPage enterCompany(String companyValue){
+    public SignupPage enterCompany(String companyValue) {
         company.fill(companyValue);
         return this;
     }
 
     @Step("Enter Address 1 {address1Value}")
-    public SignupPage enterAddress1(String address1Value){
+    public SignupPage enterAddress1(String address1Value) {
         address1.fill(address1Value);
         return this;
     }
 
     @Step("Enter Address 2 {address2Value}")
-    public SignupPage enterAddress2(String address2Value){
+    public SignupPage enterAddress2(String address2Value) {
         address2.fill(address2Value);
         return this;
     }
 
     @Step("Select Country {countryValue}")
-    public SignupPage selectCountry(String countryValue){
+    public SignupPage selectCountry(String countryValue) {
         country.selectOption(countryValue);
         LogsManager.info("Selected country: " + countryValue);
         return this;
     }
 
     @Step("Enter State {stateValue}")
-    public SignupPage enterState(String stateValue){
+    public SignupPage enterState(String stateValue) {
         state.fill(stateValue);
         return this;
     }
 
     @Step("Enter City {cityValue}")
-    public SignupPage enterCity(String cityValue){
+    public SignupPage enterCity(String cityValue) {
         city.fill(cityValue);
         return this;
     }
 
     @Step("Enter Zipcode {zipcodeValue}")
-    public SignupPage enterZipcode(String zipcodeValue){
+    public SignupPage enterZipcode(String zipcodeValue) {
         zipcode.fill(zipcodeValue);
         return this;
     }
 
     @Step("Enter Mobile Number {mobileNumberValue}")
-    public SignupPage enterMobileNumber(String mobileNumberValue){
+    public SignupPage enterMobileNumber(String mobileNumberValue) {
         mobileNumber.fill(mobileNumberValue);
         return this;
     }
 
     @Step("Click Create Account Button")
-    public SignupPage clickCreateAccountButton(){
+    public SignupPage clickCreateAccountButton() {
         createAccountButton.click();
         return this;
     }
 
     @Step("Click Continue Button")
-    public NavigationBarComponent clickContinueButton(){
+    public NavigationBarComponent clickContinueButton() {
         continueButton.click();
         return new NavigationBarComponent(page);
     }
@@ -208,15 +208,15 @@ public class SignupPage {
     // Validations
 
     @Step("Verify Account Created Label is visible")
-    public SignupPage verifyAccountCreatedLabel(){
-        Assertions.assertTrue(accountCreatedLabel.isVisible(),
+    public SignupPage verifyAccountCreatedLabel() {
+        Assert.assertTrue(accountCreatedLabel.isVisible(),
                 "The Account Created label is not visible.");
         return this;
     }
 
     @Step("Verify Account Not Created")
-    public SignupPage verifyAccountNotCreated(){
-        Assertions.assertTrue(accountCreatedLabel.isHidden(),
+    public SignupPage verifyAccountNotCreated() {
+        Assert.assertTrue(accountCreatedLabel.isHidden(),
                 "The Account Created label should not be visible but it is.");
         return this;
     }

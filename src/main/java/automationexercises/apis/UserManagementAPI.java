@@ -5,7 +5,7 @@ import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +25,12 @@ public class UserManagementAPI {
 
     // API Methods
     @Step("Create a new user account with full details")
-    public UserManagementAPI createRegisterUserAccount(String name, String email, String pass,String title,String birth_date, String birth_month,String birth_year, String firstName, String lastName
-            , String company,String address1, String address2,String country,String zipcode,String state,String city,String mobile_number){
+    public UserManagementAPI createRegisterUserAccount(String name, String email, String pass, String title,
+            String birth_date, String birth_month, String birth_year, String firstName, String lastName, String company,
+            String address1, String address2, String country, String zipcode, String state, String city,
+            String mobile_number) {
 
-        Map<String, String > formParams = new HashMap<>();
+        Map<String, String> formParams = new HashMap<>();
         formParams.put("name", name);
         formParams.put("email", email);
         formParams.put("password", pass);
@@ -54,9 +56,9 @@ public class UserManagementAPI {
     }
 
     @Step("Create a new user account with minimal details")
-    public UserManagementAPI createRegisterUserAccount(String name, String email, String pass, String firstName, String lastName)
-    {
-        Map <String, String> formParams = new HashMap<>();
+    public UserManagementAPI createRegisterUserAccount(String name, String email, String pass, String firstName,
+            String lastName) {
+        Map<String, String> formParams = new HashMap<>();
         formParams.put("name", name);
         formParams.put("email", email);
         formParams.put("password", pass);
@@ -74,7 +76,7 @@ public class UserManagementAPI {
         formParams.put("state", "state");
         formParams.put("city", "city");
         formParams.put("mobile_number", "1234567890");
-        response =  requestSpecification
+        response = requestSpecification
                 .spec(Builder.getUserManagementRequestSpecification(formParams))
                 .post(createAccount_endpoint);
         LogsManager.info(response.asPrettyString());
@@ -82,8 +84,8 @@ public class UserManagementAPI {
     }
 
     @Step("Delete user account by email")
-    public UserManagementAPI deleteUserAccount(String email, String password){
-        Map<String, String > formParams = new HashMap<>();
+    public UserManagementAPI deleteUserAccount(String email, String password) {
+        Map<String, String> formParams = new HashMap<>();
         formParams.put("email", email);
         formParams.put("password", password);
         response = requestSpecification
@@ -93,18 +95,17 @@ public class UserManagementAPI {
         return this;
     }
 
-
-    //validations
+    // validations
     @Step("Verify user is created successfully")
-    public UserManagementAPI verifyUserIsCreatedSuccessfully(){
-        Assertions.assertEquals("User created!", response.jsonPath().get("message"),
+    public UserManagementAPI verifyUserIsCreatedSuccessfully() {
+        Assert.assertEquals(response.jsonPath().get("message"), "User created!",
                 "User is not created successfully");
         return this;
     }
 
     @Step("Verify user is deleted successfully")
-    public UserManagementAPI verifyUserIsDeletedSuccessfully(){
-        Assertions.assertEquals("Account deleted!", response.jsonPath().get("message"),
+    public UserManagementAPI verifyUserIsDeletedSuccessfully() {
+        Assert.assertEquals(response.jsonPath().get("message"), "Account deleted!",
                 "User is not deleted successfully");
         return this;
     }

@@ -7,9 +7,10 @@ import com.microsoft.playwright.Dialog;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 
 import java.nio.file.Paths;
+import java.util.concurrent.CompletableFuture;
 
 public class ContactUsPage {
 
@@ -56,7 +57,7 @@ public class ContactUsPage {
     }
 
     @Step("Fill Contact Us form")
-    public ContactUsPage fillContactUsForm(String name, String email, String subject, String message){
+    public ContactUsPage fillContactUsForm(String name, String email, String subject, String message) {
         nameInput.fill(name);
         emailInput.fill(email);
         subjectInput.fill(subject);
@@ -65,25 +66,22 @@ public class ContactUsPage {
     }
 
     @Step("Upload file in Contact Us page")
-    public ContactUsPage uploadFileInContactUsPage(String filePath){
+    public ContactUsPage uploadFileInContactUsPage(String filePath) {
         chooseFileBtn.setInputFiles(Paths.get(filePath));
         return this;
     }
 
     @Step("Click on submit button")
-    public ContactUsPage clickSubmitBtn(){
+    public ContactUsPage clickSubmitBtn() {
 
-        page.onceDialog(dialog -> {
-            LogsManager.info("Alert appeared with message: " + dialog.message());
-            dialog.accept();
-            LogsManager.info("Accepted alert dialog");
-        });
+        page.onceDialog(dialog -> dialog.accept());
+
         submitBtn.click();
         return this;
     }
 
     @Step("Click on home button")
-    public ContactUsPage clickHomeBtn(){
+    public ContactUsPage clickHomeBtn() {
         homeBtn.click();
         return this;
     }
@@ -91,19 +89,16 @@ public class ContactUsPage {
     // Validations
 
     @Step("Verify Contact Us page")
-    public ContactUsPage verifyContactUsPage(){
-        Assertions.assertFalse(contactUsLabel.isVisible(),
+    public ContactUsPage verifyContactUsPage() {
+        Assert.assertFalse(contactUsLabel.isVisible(),
                 "Contact Us page is not displayed");
         return this;
     }
 
     @Step("Verify success message")
-    public ContactUsPage verifySuccessMessage(){
-        Assertions.assertEquals("Success! Your details have been submitted successfully."
-                , successMessage.textContent()
-                ,"Success message is not displayed");
+    public ContactUsPage verifySuccessMessage() {
+        Assert.assertEquals(successMessage.innerText(), "Success! Your details have been submitted successfully.",
+                "Success message is not displayed");
         return this;
     }
 }
-
-

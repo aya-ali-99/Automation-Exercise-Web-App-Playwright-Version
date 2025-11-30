@@ -5,7 +5,7 @@ import automationexercises.utils.logs.LogsManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 
 public class ProductDetailsPage {
 
@@ -52,13 +52,13 @@ public class ProductDetailsPage {
     }
 
     @Step("Add product to cart")
-    public ProductDetailsPage clickOnAddToCartButton(){
+    public ProductDetailsPage clickOnAddToCartButton() {
         addToCartButton.click();
         return this;
     }
 
     @Step("Add Review")
-    public ProductDetailsPage addReview(String name, String email, String review){
+    public ProductDetailsPage addReview(String name, String email, String review) {
         reviewName.fill(name);
         reviewEmail.fill(email);
         reviewTextArea.fill(review);
@@ -67,37 +67,34 @@ public class ProductDetailsPage {
     }
 
     @Step("Add quantity")
-    public ProductDetailsPage addQuantity(String quantity){
+    public ProductDetailsPage addQuantity(String quantity) {
         quantityInput.fill(quantity);
         return this;
     }
 
     @Step("Click on view cart button")
-    public CartPage clickOnViewCartButton(){
+    public CartPage clickOnViewCartButton() {
         viewCartBtn.click();
         return new CartPage(page);
     }
 
     // Verifications
     @Step("Verify product details")
-    public ProductDetailsPage validateProductDetails(String productName, String productPrice){
-        String actualProductName = this.productName.textContent();
-        String actualProductPrice = this.productPrice.textContent();
+    public ProductDetailsPage validateProductDetails(String productName, String productPrice) {
+        String actualProductName = this.productName.innerText();
+        String actualProductPrice = this.productPrice.innerText();
         LogsManager.info("Actual product name: " + actualProductName +
                 ", actual price: " + actualProductPrice);
-        Assertions.assertEquals(productName, actualProductName,
-                "Product name does not match");
-        Assertions.assertEquals(productPrice, actualProductPrice,
-                "Product price does not match");
+        Assert.assertEquals(actualProductName, productName, "Product name does not match");
+        Assert.assertEquals(actualProductPrice, productPrice, "Product price does not match");
         return this;
     }
 
     @Step("Verify review success message")
-    public ProductDetailsPage validateReviewSuccessMessage(String SuccessMessage){
-        String actualSuccessMessage = reviewSuccessMessage.textContent();
+    public ProductDetailsPage validateReviewSuccessMessage(String SuccessMessage) {
+        String actualSuccessMessage = reviewSuccessMessage.innerText();
         LogsManager.info("Actual review success message: " + actualSuccessMessage);
-        Assertions.assertEquals(SuccessMessage, actualSuccessMessage,
-                "Review success message does not match");
+        Assert.assertEquals(actualSuccessMessage, SuccessMessage, "Review success message does not match");
         return this;
     }
 

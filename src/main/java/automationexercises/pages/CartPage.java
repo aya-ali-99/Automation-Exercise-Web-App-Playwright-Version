@@ -5,7 +5,7 @@ import automationexercises.utils.logs.LogsManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 
 public class CartPage {
 
@@ -97,47 +97,44 @@ public class CartPage {
 
     // Verifications
     @Step("Verify product details in cart")
-    public CartPage verifyProductDetailsInCart(String productName, String productPrice, String productQuantity, String productTotal) {
-        String actualProductName = getProductName(productName).textContent();
-        String actualProductPrice = productPrice(productName).textContent();
-        String actualProductQuantity = productQuantity(productName).textContent();
-        String actualProductTotal = productTotal(productName).textContent();
+    public CartPage verifyProductDetailsInCart(String productName, String productPrice, String productQuantity,
+            String productTotal) {
+        String actualProductName = getProductName(productName).innerText();
+        String actualProductPrice = productPrice(productName).innerText();
+        String actualProductQuantity = productQuantity(productName).innerText();
+        String actualProductTotal = productTotal(productName).innerText();
         LogsManager.info("Actual product name:" + productName
                 + ", actual product price:" + productPrice
                 + ", actual product quantity:" + productQuantity
                 + ", actual product total:" + productTotal);
 
-        Assertions.assertEquals(productName,
-                actualProductName,"Product name does not match");
-        Assertions.assertEquals(productPrice,
-                actualProductPrice, "Product price does not match");
-        Assertions.assertEquals(productQuantity,
-                actualProductQuantity,"Product quantity does not match");
-        Assertions.assertEquals(productTotal,
-                actualProductTotal,"Product total does not match");
+        Assert.assertEquals(actualProductName, productName, "Product name does not match");
+        Assert.assertEquals(actualProductPrice, productPrice, "Product price does not match");
+        Assert.assertEquals(actualProductQuantity, productQuantity, "Product quantity does not match");
+        Assert.assertEquals(actualProductTotal, productTotal, "Product total does not match");
 
         return this;
     }
 
     @Step("Verify product quantity in cart")
     public CartPage verifyProductQuantityInCart(String productName, String productQuantity) {
-        String actualProductQuantity = productQuantity(productName).textContent();
-        Assertions.assertEquals(actualProductQuantity,
-                productQuantity,"Product quantity does not match");
+        String actualProductQuantity = productQuantity(productName).innerText();
+        Assert.assertEquals(actualProductQuantity,
+                productQuantity, "Product quantity does not match");
         return this;
     }
 
     @Step("Verify check out label")
     public CartPage verifyCheckOutLabel() {
-        String actualCheckOutLabel = checkOutLabel.textContent();
-        Assertions.assertEquals(actualCheckOutLabel,
-                "Checkout","Check out label does not match");
+        String actualCheckOutLabel = checkOutLabel.innerText();
+        Assert.assertEquals(actualCheckOutLabel,
+                "Checkout", "Check out label does not match");
         return this;
     }
 
     @Step("Verify product is removed from cart")
     public CartPage verifyProductIsRemovedFromCart(String productName) {
-        Assertions.assertFalse(getProductName(productName).isVisible(),
+        Assert.assertFalse(getProductName(productName).isVisible(),
                 "Product is not removed from cart");
         return this;
     }

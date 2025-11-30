@@ -3,7 +3,7 @@ package automationexercises.pages;
 import automationexercises.utils.dataReader.PropertyReader;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 
 public class TestCasesPage {
 
@@ -23,16 +23,14 @@ public class TestCasesPage {
     }
 
     // Actions
-    public TestCasesPage navigate(){
+    public TestCasesPage navigate() {
         page.navigate(PropertyReader.getProperty("baseUrlWeb") + testCasesEndPoint);
         return this;
     }
 
     // Validations
-    public TestCasesPage verifyTestCasesPage(){
-        Assertions.assertEquals("Test Cases",
-                        testCasesLabel.textContent(),
-                        "Test Cases page is not displayed");
+    public TestCasesPage verifyTestCasesPage() {
+        Assert.assertEquals(testCasesLabel.innerText(), "TEST CASES", "Test Cases page is not displayed");
         return this;
     }
 

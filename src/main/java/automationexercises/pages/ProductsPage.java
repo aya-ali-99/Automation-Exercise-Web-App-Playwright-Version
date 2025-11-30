@@ -6,7 +6,7 @@ import automationexercises.utils.logs.LogsManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 
 public class ProductsPage {
 
@@ -51,21 +51,23 @@ public class ProductsPage {
     }
 
     private Locator productPrice(String productName) {
-        return page.locator("//div[@class='features_items']//div[@class='overlay-content']/p[.='" + productName + "']//preceding-sibling::h2");
+        return page.locator("//div[@class='features_items']//div[@class='overlay-content']/p[.='" + productName
+                + "']//preceding-sibling::h2");
     }
 
     private Locator hoverOnProduct(String productName) {
-        return page.locator("//div[@class='features_items']//div[@class='productinfo text-center']/p[.='" + productName + "']");
+        return page.locator(
+                "//div[@class='features_items']//div[@class='productinfo text-center']/p[.='" + productName + "']");
     }
 
     private Locator addToCartButton(String productName) {
-        return page.locator("//div[@class='features_items']//div[@class='productinfo text-center']/p[.='" + productName + "']//following-sibling::a");
+        return page.locator("//div[@class='features_items']//div[@class='productinfo text-center']/p[.='" + productName
+                + "']//following-sibling::a");
     }
 
     private Locator viewProduct(String productName) {
         return page.locator("//p[.='" + productName + "']//following::div[@class='choose'][1]");
     }
-
 
     // Actions
     @Step("Navigate to Products Page")
@@ -128,30 +130,27 @@ public class ProductsPage {
     @Step("Validate product details for {productName} with price {productPrice}")
     public ProductsPage validateProductDetails(String productName, String productPrice) {
         hoverOnProduct(productName).hover();
-        String actualProductName = productName(productName).textContent();
-        String actualProductPrice = productPrice(productName).textContent();
+        String actualProductName = productName(productName).innerText();
+        String actualProductPrice = productPrice(productName).innerText();
         LogsManager.info("Actual product name: " + actualProductName + ", with price: " + actualProductPrice);
-        Assertions.assertEquals(productName, actualProductName
-                , "Product name does not match");
-        Assertions.assertEquals(productPrice, actualProductPrice
-                , "Product price does not match");
+        Assert.assertEquals(actualProductName, productName, "Product name does not match");
+        Assert.assertEquals(actualProductPrice, productPrice, "Product price does not match");
         return this;
     }
 
     @Step("Validate item added label contains {expectedLabel}")
     public ProductsPage validateItemAddedLabel(String expectedLabel) {
-        String actualLabel = itemAddedLabel.textContent();
+        String actualLabel = itemAddedLabel.innerText();
         LogsManager.info("Actual item added label: " + actualLabel);
-        Assertions.assertEquals(expectedLabel, actualLabel, "Item added label does not match");
+        Assert.assertEquals(actualLabel, expectedLabel, "Item added label does not match");
         return this;
     }
 
     @Step("Verify category products are displayed")
     public ProductsPage verifyCategoryProductsAreDisplayed(String label) {
-        String actualLabel = categoryLabel.textContent();
+        String actualLabel = categoryLabel.innerText();
         LogsManager.info("Actual kids dress category label: " + actualLabel);
-        Assertions.assertEquals(label, actualLabel,
-                "Kids dress category label does not match");
+        Assert.assertEquals(actualLabel, label, "Kids dress category label does not match");
         return this;
     }
 }

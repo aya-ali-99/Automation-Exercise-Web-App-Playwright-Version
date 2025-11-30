@@ -3,37 +3,35 @@ package automationexercises.base;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.extension.ExtendWith;
-import automationexercises.listeners.JUnitTestListener;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Listeners;
+import automationexercises.listeners.TestNGListeners;
 
 import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import io.qameta.allure.junit5.AllureJunit5;
-
-@ExtendWith({ AllureJunit5.class, JUnitTestListener.class })
+@Listeners({ TestNGListeners.class })
 public class BaseTest {
     protected Page page;
 
-    @BeforeAll
+    @BeforeSuite
     @Step("Initialize Playwright browser")
-    public static void setUpAll() {
+    public void setUpAll() {
         PlaywrightManager.start();
     }
 
-    @BeforeEach
+    @BeforeMethod
     @Step("Create new page context for test")
-    public void setUp(TestInfo testInfo) {
+    public void setUp(ITestResult result) {
         page = PlaywrightManager.getPage();
 
         // Add test metadata
-        String testName = testInfo.getDisplayName();
+        String testName = result.getName();
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
         // Allure.parameter("Test Name", testName);
@@ -44,16 +42,16 @@ public class BaseTest {
         // m.getName()).orElse("Unknown"));
     }
 
-    @AfterEach
+    @AfterMethod
     @Step("Close page and capture final state")
-    public void tearDown(TestInfo testInfo) {
+    public void tearDown(ITestResult result) {
         if (page != null) {
             // Capture screenshot before closing (useful for both passed and failed tests)
             try {
                 byte[] screenshot = page.screenshot();
-                String screenshotName = testInfo.getDisplayName() + " - Final State";
-                 Allure.addAttachment(screenshotName, "image/png",
-                 new ByteArrayInputStream(screenshot), ".png");
+                String screenshotName = result.getName() + " - Final State";
+                Allure.addAttachment(screenshotName, "image/png",
+                        new ByteArrayInputStream(screenshot), ".png");
             } catch (Exception e) {
                 System.err.println("Failed to capture screenshot: " + e.getMessage());
             }
@@ -66,9 +64,13 @@ public class BaseTest {
         }
     }
 
-    @AfterAll
+    @AfterSuite
     @Step("Stop Playwright and cleanup resources")
-    public static void tearDownAll() {
+    public void tearDownAll() {
         PlaywrightManager.stop();
+    }
+
+    public Page getPage() {
+        return page;
     }
 }

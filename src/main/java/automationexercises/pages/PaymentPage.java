@@ -7,7 +7,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.Assertions;
+import org.testng.Assert;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,7 +30,6 @@ public class PaymentPage {
     private final Locator successMessage;
     private final Locator downloadInvoiceBtn;
 
-
     public PaymentPage(Page page) {
         this.page = page;
 
@@ -48,7 +47,8 @@ public class PaymentPage {
     // Actions
 
     @Step("Fill card information")
-    public PaymentPage fillCardInfo(String nameOnCard, String cardNumber, String cvc, String expiryMonth, String expiryYear) {
+    public PaymentPage fillCardInfo(String nameOnCard, String cardNumber, String cvc, String expiryMonth,
+            String expiryYear) {
         this.nameOnCard.fill(nameOnCard);
         this.cardNumber.fill(cardNumber);
         this.cvc.fill(cvc);
@@ -72,9 +72,8 @@ public class PaymentPage {
     // Validations
     @Step("Verify success message")
     public PaymentPage verifySuccessMessage() {
-        String actualSucessMsg = successMessage.textContent();
-        Assertions.assertEquals("Congratulations! Your order has been confirmed!",
-                actualSucessMsg,
+        String actualSucessMsg = successMessage.innerText();
+        Assert.assertEquals(actualSucessMsg, "Congratulations! Your order has been confirmed!",
                 "Success message does not match");
         return this;
     }
@@ -90,7 +89,7 @@ public class PaymentPage {
         String userDir = System.getProperty("user.dir");
         String downloadPath = userDir + "\\src\\test\\resources\\downloads";
 
-        download.saveAs(Paths.get(downloadPath ,"invoice.txt"));
+        download.saveAs(Paths.get(downloadPath, "invoice.txt"));
         return this;
     }
 }
