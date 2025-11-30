@@ -2,10 +2,7 @@ package automationexercises.tests.ui;
 
 import automationexercises.base.BaseTest;
 import automationexercises.pages.components.NavigationBarComponent;
-import automationexercises.utils.dataReader.JsonReader;
 import io.qameta.allure.*;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 
