@@ -93,13 +93,13 @@ public class TestNGListeners implements ISuiteListener, IExecutionListener, IInv
         FileUtils.cleanDirectory(AllureConstants.RESULTS_FOLDER.toFile());
         FileUtils.cleanDirectory(new File(ScreenshotManager.SCREENSHOTS_PATH));
         FileUtils.cleanDirectory(new File("src/test/resources/downloads/"));
-        FileUtils.forceDelete(new File(LogsManager.LOGS_PATH + "logs.log"));
+        // Log file cleanup is now handled by Log4j2 RollingFileAppender with
+        // OnStartupTriggeringPolicy
     }
 
     private void createTestOutputDirectories() {
         // Implement logic to create test output directories
         FileUtils.createDirectory(ScreenshotManager.SCREENSHOTS_PATH);
         FileUtils.createDirectory("src/test/resources/downloads/");
-
     }
 }
