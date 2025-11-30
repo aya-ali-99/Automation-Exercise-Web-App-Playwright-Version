@@ -1,13 +1,144 @@
 package automationexercises.pages;
 
-
+import automationexercises.utils.dataReader.PropertyReader;
+import automationexercises.utils.logs.LogsManager;
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
+import org.junit.jupiter.api.Assertions;
 
 public class CartPage {
-    private final Page page;
+
+    private Page page;
+
+    // Variables
+    private String cartPage = "/view_cart";
+
+    // Static Locators
+    private final Locator proceedToCheckOutBtn;
+    private final Locator checkOutModal;
+    private final Locator checkOutLabel;
+    private final Locator registerLoginBtn;
+    private final Locator continueOnCart;
+    private final Locator emptyCartMessage;
 
     public CartPage(Page page) {
         this.page = page;
 
+        // Initialize static locators
+        this.proceedToCheckOutBtn = page.locator(".col-sm-6 a").first();
+        this.checkOutModal = page.locator(".modal-dialog");
+        this.checkOutLabel = page.locator(".modal-dialog .modal-title");
+        this.registerLoginBtn = page.locator(".modal-body u");
+        this.continueOnCart = page.locator(".modal-footer button");
+        this.emptyCartMessage = page.locator("#empty_cart");
+    }
+
+    // Dynamic Locators (as methods)
+    private Locator getProductName(String productName) {
+        return page.locator("(//h4/a[.='" + productName + "'])[1]");
+    }
+
+    private Locator productPrice(String productName) {
+        return page.locator("(//h4/a[.='" + productName + "']//following::td[@class='cart_price']/p)[1]");
+    }
+
+    private Locator productQuantity(String productName) {
+        return page.locator("(//h4/a[.='" + productName + "']//following::td[@class='cart_quantity']/button)[1]");
+    }
+
+    private Locator productTotal(String productName) {
+        return page.locator("(//h4/a[.='" + productName + "']//following::td[@class='cart_total']/p)[1]");
+    }
+
+    private Locator removeProductDL(String productName) {
+        return page.locator("(//h4 /a[.='" + productName + "'] //following::td[@class='cart_delete'] /a)[1]");
+    }
+
+    // Actions
+
+    @Step("Navigate to view cart page")
+    public CartPage navigate() {
+        page.navigate(PropertyReader.getProperty("baseUrlWeb") + cartPage);
+        LogsManager.info("Navigated to cart page");
+        return this;
+    }
+
+    @Step("Click on Proceed to Checkout button")
+    public CheckoutPage clickOnProceedToCheckoutButton() {
+        proceedToCheckOutBtn.click();
+        return new CheckoutPage(page);
+    }
+
+    @Step("Click on Proceed to Checkout button")
+    public CartPage clickOnProceedToCheckoutButtonWithoutLogin() {
+        proceedToCheckOutBtn.click();
+        return this;
+    }
+
+    @Step("Remove product from the cart")
+    public CartPage removeProductFromCart(String productName) {
+        removeProductDL(productName).click();
+        page.waitForTimeout(1000);
+        return this;
+    }
+
+    @Step("Click on continue on cart button")
+    public CartPage clickOnContinueOnCartButton() {
+        continueOnCart.click();
+        return this;
+    }
+
+    @Step("Click on register/login button")
+    public SignupLoginPage clickOnRegisterLoginButton() {
+        registerLoginBtn.click();
+        return new SignupLoginPage(page);
+    }
+
+    // Verifications
+    @Step("Verify product details in cart")
+    public CartPage verifyProductDetailsInCart(String productName, String productPrice, String productQuantity, String productTotal) {
+        String actualProductName = getProductName(productName).textContent();
+        String actualProductPrice = productPrice(productName).textContent();
+        String actualProductQuantity = productQuantity(productName).textContent();
+        String actualProductTotal = productTotal(productName).textContent();
+        LogsManager.info("Actual product name:" + productName
+                + ", actual product price:" + productPrice
+                + ", actual product quantity:" + productQuantity
+                + ", actual product total:" + productTotal);
+
+        Assertions.assertEquals(productName,
+                actualProductName,"Product name does not match");
+        Assertions.assertEquals(productPrice,
+                actualProductPrice, "Product price does not match");
+        Assertions.assertEquals(productQuantity,
+                actualProductQuantity,"Product quantity does not match");
+        Assertions.assertEquals(productTotal,
+                actualProductTotal,"Product total does not match");
+
+        return this;
+    }
+
+    @Step("Verify product quantity in cart")
+    public CartPage verifyProductQuantityInCart(String productName, String productQuantity) {
+        String actualProductQuantity = productQuantity(productName).textContent();
+        Assertions.assertEquals(actualProductQuantity,
+                productQuantity,"Product quantity does not match");
+        return this;
+    }
+
+    @Step("Verify check out label")
+    public CartPage verifyCheckOutLabel() {
+        String actualCheckOutLabel = checkOutLabel.textContent();
+        Assertions.assertEquals(actualCheckOutLabel,
+                "Checkout","Check out label does not match");
+        return this;
+    }
+
+    @Step("Verify product is removed from cart")
+    public CartPage verifyProductIsRemovedFromCart(String productName) {
+        Assertions.assertFalse(getProductName(productName).isVisible(),
+                "Product is not removed from cart");
+        return this;
     }
 }

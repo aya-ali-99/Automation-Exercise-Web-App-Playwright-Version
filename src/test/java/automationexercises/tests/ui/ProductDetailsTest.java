@@ -43,17 +43,17 @@ public class ProductDetailsTest extends BaseTest {
                 .validateReviewSuccessMessage(testData.getJsonData("messages.review"));
     }
 
-//    @Test
-//    @Description("Verify product quantity in cart")
-//    public void verifyProductQuantityInCartWithoutLoginTC(){
-//        new ProductsPage(page)
-//                .navigate()
-//                .clickOnViewProduct(testData.getJsonData("product.name"))
-//                .addQuantity(testData.getJsonData("addQuantity"))
-//                .clickOnAddToCartButton()
-//                .clickOnViewCartButton()
-//                .verifyProductQuantityInCart(testData.getJsonData("product.name"),
-//                        testData.getJsonData("addQuantity"));
-//    }
+    @Test
+    @Description("Verify product quantity in cart")
+    public void verifyProductQuantityInCartWithoutLoginTC(){
+        new ProductsPage(page)
+                .navigate()
+                .clickOnViewProduct(testData.getJsonData("product.name"))
+                .addQuantity(testData.getJsonData("addQuantity"))
+                .clickOnAddToCartButton()
+                .clickOnViewCartButton()
+                .verifyProductQuantityInCart(testData.getJsonData("product.name"),
+                        testData.getJsonData("addQuantity"));
+    }
 
 }
