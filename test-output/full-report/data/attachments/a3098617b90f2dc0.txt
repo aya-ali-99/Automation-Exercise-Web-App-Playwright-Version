@@ -1,0 +1,16 @@
+[INFO] - [01-12-2025 00:50:10] [main] [automationexercises.listeners.TestNGListeners] - Test Execution started
+[INFO] - [01-12-2025 00:50:10] [main] [automationexercises.listeners.TestNGListeners] - Directories cleaned
+[INFO] - [01-12-2025 00:50:10] [main] [automationexercises.FileUtils] - Directory created: test-output\screenshots\
+[INFO] - [01-12-2025 00:50:10] [main] [automationexercises.FileUtils] - Directory created: src/test/resources/downloads/
+[INFO] - [01-12-2025 00:50:10] [main] [automationexercises.listeners.TestNGListeners] - Directories created
+[INFO] - [01-12-2025 00:50:10] [main] [automationexercises.utils.dataReader.PropertyReader] - Properties file loaded successfully
+[INFO] - [01-12-2025 00:50:10] [main] [automationexercises.listeners.TestNGListeners] - Properties loaded
+[INFO] - [01-12-2025 00:50:10] [main] [automationexercises.utils.report.AllureEnvironmentManager] - Allure environment variables set.
+[INFO] - [01-12-2025 00:50:12] [main] [automationexercises.utils.report.AllureBinaryManager] - Allure binaries already exist.
+[INFO] - [01-12-2025 00:50:12] [main] [automationexercises.listeners.TestNGListeners] - Allure environment set
+[INFO] - [01-12-2025 00:50:31] [main] [automationexercises.listeners.TestNGListeners] - Test Case verifyProductDetailsInCartWithoutLogin started
+[INFO] - [01-12-2025 00:50:33] [main] [automationexercises.pages.ProductsPage] - Actual item added label: Your product has been added to cart.
+[INFO] - [01-12-2025 00:50:34] [main] [automationexercises.pages.CartPage] - Actual product name:Men Tshirt, actual product price:Rs. 400, actual product quantity:1, actual product total:Rs. 400
+[INFO] - [01-12-2025 00:50:34] [main] [automationexercises.utils.screenshots.ScreenshotManager] - Screenshot captured for: passed-verifyProductDetailsInCartWithoutLogin
+[INFO] - [01-12-2025 00:50:34] [main] [automationexercises.utils.screenshots.ScreenshotManager] - Screenshot saved to: test-output\screenshots\passed-verifyProductDetailsInCartWithoutLogin.png
+[INFO] - [01-12-2025 00:50:34] [main] [automationexercises.utils.screenshots.ScreenshotManager] - Screenshot attached to Allure: passed-verifyProductDetailsInCartWithoutLogin

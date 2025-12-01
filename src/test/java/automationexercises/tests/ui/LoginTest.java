@@ -9,9 +9,8 @@ import automationexercises.utils.dataReader.JsonReader;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
 
-@Epic("Automation Exercise ")
-@Feature("UI User Management")
-@Severity(SeverityLevel.CRITICAL)
+@Epic("Automation Exercise Website")
+@Feature("User Management")
 @Owner("Aya")
 public class LoginTest extends BaseTest {
         String timeStamp = TimeManager.getSimpleTimestamp();
@@ -20,8 +19,9 @@ public class LoginTest extends BaseTest {
         // Tests
 
         @Test
-        @Story("Valid User Login")
-        @Description("Verify user can login with valid data")
+        @Story("User Login")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify that a user can login with valid credentials")
         public void validLoginTC() {
                 new UserManagementAPI().createRegisterUserAccount(
                                 testData.getJsonData("loginName"),
@@ -43,8 +43,9 @@ public class LoginTest extends BaseTest {
         }
 
         @Test
-        @Story("Invalid User Login")
-        @Description("Verify user can't login with invalid email")
+        @Story("User Login")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Verify that a user cannot login with an invalid email")
         public void inValidLoginUsingInvalidEmailTC() {
                 new UserManagementAPI().createRegisterUserAccount(
                                 testData.getJsonData("loginName"),
@@ -66,8 +67,9 @@ public class LoginTest extends BaseTest {
         }
 
         @Test
-        @Story("Invalid User Login")
-        @Description("Verify user can't login with invalid password")
+        @Story("User Login")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Verify that a user cannot login with an invalid password")
         public void inValidLoginUsingInvalidPasswordTC() {
                 new UserManagementAPI().createRegisterUserAccount(
                                 testData.getJsonData("loginName"),
@@ -90,7 +92,8 @@ public class LoginTest extends BaseTest {
 
         @Test
         @Story("User Logout")
-        @Description("Verify user can logout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify that a logged-in user can logout successfully")
         public void logoutTC() {
                 new UserManagementAPI().createRegisterUserAccount(
                                 testData.getJsonData("loginName"),

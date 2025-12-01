@@ -6,10 +6,8 @@ import automationexercises.utils.dataReader.JsonReader;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
 
-@Epic("Automation Exercise ")
-@Feature("UI Products Management")
-@Story("Products Management")
-@Severity(SeverityLevel.CRITICAL)
+@Epic("Automation Exercise Website")
+@Feature("Product Management")
 @Owner("Aya")
 public class ProductsTest extends BaseTest {
         JsonReader testData = new JsonReader("products-data");
@@ -17,7 +15,9 @@ public class ProductsTest extends BaseTest {
         // Tests
 
         @Test
-        @Description("Verify searching for product without logging in")
+        @Story("Search Products")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify that a user can search for a product without logging in")
         public void searchForProductWithoutLoginTC() {
                 new ProductsPage(page)
                                 .navigate()
@@ -28,7 +28,9 @@ public class ProductsTest extends BaseTest {
         }
 
         @Test
-        @Description("Verify product added to cart without logging in")
+        @Story("Add to Cart")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify that a user can add a product to the cart without logging in")
         public void addProductToCartWithoutLoginTC() {
                 new ProductsPage(page)
                                 .navigate()
@@ -38,7 +40,9 @@ public class ProductsTest extends BaseTest {
         }
 
         @Test
-        @Description("Verify category products are displayed")
+        @Story("Product Categories")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Verify that products are displayed correctly when filtering by category")
         public void chooseKidsDressCategoryTC() {
                 new ProductsPage(page)
                                 .navigate()

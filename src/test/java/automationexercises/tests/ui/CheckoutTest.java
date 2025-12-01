@@ -18,10 +18,8 @@ import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Epic("Automation Exercise ")
-@Feature("UI Checkout Management")
-@Story("Checkout Management")
-@Severity(SeverityLevel.CRITICAL)
+@Epic("Automation Exercise Website")
+@Feature("Checkout Management")
 @Owner("Aya")
 public class CheckoutTest extends BaseTest {
         String timeStamp = TimeManager.getSimpleTimestamp();
@@ -30,7 +28,9 @@ public class CheckoutTest extends BaseTest {
         // Tests
 
         @Test
-        @Description("Verify user can register with valid data")
+        @Story("Checkout Process")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify that a new user can register successfully during the checkout process")
         public void registerNewAccountTC() {
                 new UserManagementAPI().createRegisterUserAccount(
                                 testData.getJsonData("name"),
@@ -54,7 +54,9 @@ public class CheckoutTest extends BaseTest {
         }
 
         @Test(dependsOnMethods = { "registerNewAccountTC" })
-        @Description("Verify user can login with valid data")
+        @Story("Checkout Process")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify that the user can login successfully during the checkout process")
         public void loginToAccountTC() {
                 new SignupLoginPage(page).navigate()
                                 .enterLoginEmail(testData.getJsonData("email") + timeStamp + "@gmail.com")
@@ -64,7 +66,9 @@ public class CheckoutTest extends BaseTest {
         }
 
         @Test(dependsOnMethods = { "loginToAccountTC", "registerNewAccountTC" })
-        @Description("Verify user can add product to cart")
+        @Story("Checkout Process")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify that the user can add a product to the cart")
         public void addProductToCartTC() {
                 new ProductsPage(page)
                                 .navigate()
@@ -80,7 +84,9 @@ public class CheckoutTest extends BaseTest {
 
         @Test(dependsOnMethods = { "addProductToCartTC", "loginToAccountTC",
                         "registerNewAccountTC" })
-        @Description("Verify user can checkout with login")
+        @Story("Checkout Process")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify that the user can proceed to checkout after logging in")
         public void checkoutTC() {
                 new CartPage(page)
                                 .navigate()
@@ -113,14 +119,15 @@ public class CheckoutTest extends BaseTest {
         }
 
         @Test(dependsOnMethods = { "checkoutTC", "addProductToCartTC", "loginToAccountTC", "registerNewAccountTC" })
-        @Description("Delete account")
+        @Story("Checkout Process")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Verify that the user account can be deleted after checkout")
         public void deleteAccountTC() {
                 new UserManagementAPI().deleteUserAccount(
                                 testData.getJsonData("email") + timeStamp + "@gmail.com",
                                 testData.getJsonData("password"))
                                 .verifyUserIsDeletedSuccessfully();
         }
-
 
         // Configurations
         @AfterMethod
@@ -132,13 +139,14 @@ public class CheckoutTest extends BaseTest {
                                 byte[] screenshot = page.screenshot();
                                 String screenshotName = result.getName() + " - Final State";
                                 Allure.addAttachment(screenshotName, "image/png",
-                                        new ByteArrayInputStream(screenshot), ".png");
+                                                new ByteArrayInputStream(screenshot), ".png");
                         } catch (Exception e) {
                                 System.err.println("Failed to capture screenshot: " + e.getMessage());
                         }
 
                         // Add completion timestamp
-                        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                        String timestamp = LocalDateTime.now()
+                                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                         Allure.parameter("Test End Time", timestamp);
                 }
         }

@@ -7,17 +7,17 @@ import automationexercises.utils.dataReader.JsonReader;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
 
-@Epic("Automation Exercise ")
-@Feature("Subscription")
+@Epic("Automation Exercise Website")
+@Feature("Subscription Management")
 @Owner("Aya")
 public class SubscriptionTest extends BaseTest {
         JsonReader testData = new JsonReader("subscription-data");
 
         // Tests
         @Test
-        @Story("Subscription with valid Email")
-        @Description("Verify that a user can successfully subscribe to the newsletter from Home Page")
+        @Story("Newsletter Subscription")
         @Severity(SeverityLevel.NORMAL)
+        @Description("Verify that a user can successfully subscribe to the newsletter from the Home Page")
         public void SubscriptionFromHomePageTC() {
                 new NavigationBarComponent(page)
                                 .clickOnHomeButton();
@@ -29,9 +29,9 @@ public class SubscriptionTest extends BaseTest {
 
         // Tests
         @Test
-        @Story("Subscription with valid Email")
-        @Description("Verify that a user can successfully subscribe to the newsletter from Cart Page")
+        @Story("Newsletter Subscription")
         @Severity(SeverityLevel.NORMAL)
+        @Description("Verify that a user can successfully subscribe to the newsletter from the Cart Page")
         public void SubscriptionFromCartPageTC() {
                 new NavigationBarComponent(page)
                                 .clickOnCartButton();

@@ -7,7 +7,7 @@ import automationexercises.pages.CartPage;
 import automationexercises.pages.CheckoutPage;
 import automationexercises.pages.ProductsPage;
 import automationexercises.pages.SignupLoginPage;
-import automationexercises.pages.components.NavigationBarComponent;
+
 import automationexercises.utils.TimeManager;
 import automationexercises.utils.dataReader.JsonReader;
 import io.qameta.allure.*;
@@ -20,12 +20,9 @@ import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Epic("Automation Exercise ")
-@Feature("UI Payment Management")
-@Story("Payment Management")
-@Severity(SeverityLevel.CRITICAL)
+@Epic("Automation Exercise Website")
+@Feature("Payment Management")
 @Owner("Aya")
-
 public class PaymentTest extends BaseTest {
         String timeStamp = TimeManager.getSimpleTimestamp();
         JsonReader testData = new JsonReader("checkout-data");
@@ -33,7 +30,9 @@ public class PaymentTest extends BaseTest {
         // Tests
 
         @Test
-        @Description("Register new account")
+        @Story("Payment Process")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Register a new account to proceed with payment")
         public void registerNewAccountTC() {
                 new UserManagementAPI().createRegisterUserAccount(
                                 testData.getJsonData("name"),
@@ -57,7 +56,9 @@ public class PaymentTest extends BaseTest {
         }
 
         @Test(dependsOnMethods = { "registerNewAccountTC" })
-        @Description("Login to account")
+        @Story("Payment Process")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Login to the account to proceed with payment")
         public void loginToAccountTC() {
                 new SignupLoginPage(page).navigate()
                                 .enterLoginEmail(testData.getJsonData("email") + timeStamp + "@gmail.com")
@@ -67,7 +68,9 @@ public class PaymentTest extends BaseTest {
         }
 
         @Test(dependsOnMethods = { "loginToAccountTC", "registerNewAccountTC" })
-        @Description("Add product to cart")
+        @Story("Payment Process")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Add a product to the cart")
         public void addProductToCartTC() {
                 new ProductsPage(page)
                                 .navigate()
@@ -83,7 +86,9 @@ public class PaymentTest extends BaseTest {
 
         @Test(dependsOnMethods = { "addProductToCartTC", "loginToAccountTC",
                         "registerNewAccountTC" })
-        @Description("Checkout")
+        @Story("Payment Process")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Proceed to checkout")
         public void checkoutTC() {
                 new CartPage(page)
                                 .navigate()
@@ -117,7 +122,9 @@ public class PaymentTest extends BaseTest {
 
         @Test(dependsOnMethods = { "checkoutTC", "addProductToCartTC",
                         "loginToAccountTC", "registerNewAccountTC" })
-        @Description("Payment")
+        @Story("Payment Process")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Complete the payment process")
         public void paymentTC() {
                 new CheckoutPage(page)
                                 .clickPlaceOrderBtn()
@@ -135,7 +142,9 @@ public class PaymentTest extends BaseTest {
         @Test(dependsOnMethods = { "paymentTC", "checkoutTC",
                         "addProductToCartTC", "loginToAccountTC",
                         "registerNewAccountTC" })
-        @Description("Delete account")
+        @Story("Payment Process")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Delete the user account after payment")
         public void deleteAccountTC() {
                 new UserManagementAPI().deleteUserAccount(
                                 testData.getJsonData("email") + timeStamp + "@gmail.com",
@@ -153,13 +162,14 @@ public class PaymentTest extends BaseTest {
                                 byte[] screenshot = page.screenshot();
                                 String screenshotName = result.getName() + " - Final State";
                                 Allure.addAttachment(screenshotName, "image/png",
-                                        new ByteArrayInputStream(screenshot), ".png");
+                                                new ByteArrayInputStream(screenshot), ".png");
                         } catch (Exception e) {
                                 System.err.println("Failed to capture screenshot: " + e.getMessage());
                         }
 
                         // Add completion timestamp
-                        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                        String timestamp = LocalDateTime.now()
+                                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                         Allure.parameter("Test End Time", timestamp);
                 }
         }

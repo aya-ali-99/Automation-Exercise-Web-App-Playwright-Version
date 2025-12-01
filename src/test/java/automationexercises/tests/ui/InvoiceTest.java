@@ -17,9 +17,8 @@ import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Epic("Automation Exercise ")
-@Feature("UI Invoice Management")
-@Severity(SeverityLevel.CRITICAL)
+@Epic("Automation Exercise Website")
+@Feature("Invoice Management")
 @Owner("Aya")
 public class InvoiceTest extends BaseTest {
         String timeStamp = TimeManager.getSimpleTimestamp();
@@ -30,8 +29,9 @@ public class InvoiceTest extends BaseTest {
         // Place order scenario 1: register & login before checkout
 
         @Test(groups = { "scenario_1" })
-        @Story("Place order scenario 1: register & login before checkout")
-        @Description("Register new account")
+        @Story("Place Order: Register before Checkout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Register a new account for the order")
         public void registerNewAccountTC() {
                 new UserManagementAPI().createRegisterUserAccount(
                                 testData.getJsonData("name"),
@@ -54,9 +54,11 @@ public class InvoiceTest extends BaseTest {
                                 .verifyUserIsCreatedSuccessfully();
         }
 
-        @Test(groups = { "scenario_1" }, dependsOnMethods = { "registerNewAccountTC" })
-        @Story("Place order scenario 1: register & login before checkout")
-        @Description("Login to account")
+        @Test(groups = { "scenario_1" },
+                dependsOnMethods = { "registerNewAccountTC" })
+        @Story("Place Order: Register before Checkout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Login to the newly created account")
         public void loginToAccountTC() {
                 new SignupLoginPage(page).navigate()
                                 .enterLoginEmail(testData.getJsonData("email") + timeStamp + "@gmail.com")
@@ -65,9 +67,11 @@ public class InvoiceTest extends BaseTest {
                                 .verifyUserLabel(testData.getJsonData("name"));
         }
 
-        @Test(groups = { "scenario_1" }, dependsOnMethods = { "loginToAccountTC", "registerNewAccountTC" })
-        @Story("Place order scenario 1: register & login before checkout")
-        @Description("Add product to cart")
+        @Test(groups = { "scenario_1" },
+                dependsOnMethods = { "loginToAccountTC", "registerNewAccountTC" })
+        @Story("Place Order: Register before Checkout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Add a product to the cart")
         public void addProductToCartTC() {
                 new ProductsPage(page)
                                 .navigate()
@@ -81,10 +85,12 @@ public class InvoiceTest extends BaseTest {
                                                 testData.getJsonData("product.total"));
         }
 
-        @Test(groups = { "scenario_1" }, dependsOnMethods = { "addProductToCartTC", "loginToAccountTC",
+        @Test(groups = { "scenario_1" },
+                dependsOnMethods = { "addProductToCartTC", "loginToAccountTC",
                         "registerNewAccountTC" })
-        @Story("Place order scenario 1: register & login before checkout")
-        @Description("Checkout")
+        @Story("Place Order: Register before Checkout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Proceed to checkout")
         public void checkoutTC() {
                 new CartPage(page)
                                 .navigate()
@@ -116,10 +122,12 @@ public class InvoiceTest extends BaseTest {
 
         }
 
-        @Test(groups = { "scenario_1" }, dependsOnMethods = { "checkoutTC", "addProductToCartTC", "loginToAccountTC",
+        @Test(groups = { "scenario_1" },
+                dependsOnMethods = { "checkoutTC", "addProductToCartTC", "loginToAccountTC",
                         "registerNewAccountTC" })
-        @Story("Place order scenario 1: register & login before checkout")
-        @Description("Payment")
+        @Story("Place Order: Register before Checkout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Complete payment")
         public void paymentTC() {
                 new CheckoutPage(page)
                                 .clickPlaceOrderBtn()
@@ -134,10 +142,12 @@ public class InvoiceTest extends BaseTest {
                                 .clickDownloadInvoiceBtn();
         }
 
-        @Test(groups = { "scenario_1" }, dependsOnMethods = { "paymentTC", "checkoutTC", "addProductToCartTC",
+        @Test(groups = { "scenario_1" },
+                dependsOnMethods = { "paymentTC", "checkoutTC", "addProductToCartTC",
                         "loginToAccountTC", "registerNewAccountTC" })
-        @Story("Place order scenario 1: register & login before checkout")
-        @Description("Verify invoice file")
+        @Story("Place Order: Register before Checkout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify the downloaded invoice file")
         public void verifyInvoiceFileTC() {
                 new PaymentPage(page)
                                 .clickDownloadInvoiceBtn()
@@ -145,10 +155,12 @@ public class InvoiceTest extends BaseTest {
                                                 testData.getJsonData("invoiceName"));
         }
 
-        @Test(groups = { "scenario_1" }, dependsOnMethods = { "verifyInvoiceFileTC", "paymentTC", "checkoutTC",
+        @Test(groups = { "scenario_1" },
+                dependsOnMethods = { "verifyInvoiceFileTC", "paymentTC", "checkoutTC",
                         "addProductToCartTC", "loginToAccountTC", "registerNewAccountTC" })
-        @Story("Place order scenario 1: register & login before checkout")
-        @Description("Delete account")
+        @Story("Place Order: Register before Checkout")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Delete the user account")
         public void deleteAccountTC() {
                 new UserManagementAPI().deleteUserAccount(
                                 testData.getJsonData("email") + timeStamp + "@gmail.com",
@@ -158,9 +170,11 @@ public class InvoiceTest extends BaseTest {
 
         // Place order scenario 2: register & login before checkout
 
-        @Test(groups = { "scenario_2" }, dependsOnGroups = { "scenario_1" })
-        @Story("Place order scenario 2: register & login after checkout")
-        @Description("Add product to cart")
+        @Test(groups = { "scenario_2" },
+                dependsOnGroups = { "scenario_1" })
+        @Story("Place Order: Register after Checkout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Add product to cart before login")
         public void addProductToCartBeforeLoginTC() {
                 new ProductsPage(page)
                                 .navigate()
@@ -174,10 +188,13 @@ public class InvoiceTest extends BaseTest {
                                                 testData.getJsonData("product.total"));
         }
 
-        @Test(groups = { "scenario_2" }, dependsOnGroups = { "scenario_1" }, dependsOnMethods = {
+        @Test(groups = { "scenario_2" },
+                dependsOnGroups = { "scenario_1" },
+                dependsOnMethods = {
                         "addProductToCartBeforeLoginTC" })
-        @Story("Place order scenario 2: register & login after checkout")
-        @Description("Checkout without login")
+        @Story("Place Order: Register after Checkout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Proceed to checkout without login")
         public void checkoutBeforeLoginTC() {
                 new CartPage(page)
                                 .navigate()
@@ -186,10 +203,13 @@ public class InvoiceTest extends BaseTest {
                                 .verifySignupLabelVisible();
         }
 
-        @Test(groups = { "scenario_2" }, dependsOnGroups = { "scenario_1" }, dependsOnMethods = {
+        @Test(groups = { "scenario_2" },
+                dependsOnGroups = { "scenario_1" },
+                dependsOnMethods = {
                         "addProductToCartBeforeLoginTC", "checkoutBeforeLoginTC" })
-        @Story("Place order scenario 2: register & login after checkout")
-        @Description("Sign up with valid data")
+        @Story("Place Order: Register after Checkout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Sign up with valid data during checkout")
         public void validSignUpTC() {
                 timeStamp += 1;
                 new SignupLoginPage(page)
@@ -219,10 +239,13 @@ public class InvoiceTest extends BaseTest {
 
         }
 
-        @Test(groups = { "scenario_2" }, dependsOnGroups = { "scenario_1" }, dependsOnMethods = {
+        @Test(groups = { "scenario_2" },
+                dependsOnGroups = { "scenario_1" },
+                dependsOnMethods = {
                         "addProductToCartBeforeLoginTC", "checkoutBeforeLoginTC", "validSignUpTC" })
-        @Story("Place order scenario 2: register & login after checkout")
-        @Description("Checkout after registering")
+        @Story("Place Order: Register after Checkout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Proceed to checkout after registering")
         public void checkoutAfterLoginTC() {
                 new CartPage(page)
                                 .navigate()
@@ -258,11 +281,14 @@ public class InvoiceTest extends BaseTest {
                                                 testData.getJsonData("mobileNumber"));
         }
 
-        @Test(groups = { "scenario_2" }, dependsOnGroups = { "scenario_1" }, dependsOnMethods = {
+        @Test(groups = { "scenario_2" },
+                dependsOnGroups = { "scenario_1" },
+                dependsOnMethods = {
                         "addProductToCartBeforeLoginTC", "checkoutBeforeLoginTC", "validSignUpTC",
                         "checkoutAfterLoginTC" })
-        @Story("Place order scenario 2: register & login after checkout")
-        @Description("Payment")
+        @Story("Place Order: Register after Checkout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Complete payment for scenario 2")
         public void paymentScenario2TC() {
                 new CheckoutPage(page)
                                 .clickPlaceOrderBtn()
@@ -277,11 +303,14 @@ public class InvoiceTest extends BaseTest {
                                 .clickDownloadInvoiceBtn();
         }
 
-        @Test(groups = { "scenario_2" }, dependsOnGroups = { "scenario_1" }, dependsOnMethods = {
+        @Test(groups = { "scenario_2" },
+                dependsOnGroups = { "scenario_1" },
+                dependsOnMethods = {
                         "addProductToCartBeforeLoginTC", "checkoutBeforeLoginTC", "validSignUpTC",
                         "checkoutAfterLoginTC", "paymentScenario2TC" })
-        @Story("Place order scenario 2: register & login after checkout")
-        @Description("Verify invoice file")
+        @Story("Place Order: Register after Checkout")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify invoice file for scenario 2")
         public void verifyInvoiceFileScenario2TC() {
                 new PaymentPage(page)
                                 .clickDownloadInvoiceBtn()
@@ -289,19 +318,20 @@ public class InvoiceTest extends BaseTest {
                                                 testData.getJsonData("invoiceName"));
         }
 
-        @Test(groups = { "scenario_2" }, dependsOnGroups = { "scenario_1" }, dependsOnMethods = {
+        @Test(groups = { "scenario_2" },
+                dependsOnGroups = { "scenario_1" },
+                dependsOnMethods = {
                         "addProductToCartBeforeLoginTC", "checkoutBeforeLoginTC", "validSignUpTC",
                         "checkoutAfterLoginTC", "paymentScenario2TC", "verifyInvoiceFileScenario2TC" })
-        @Story("Place order scenario 2: register & login after checkout")
-        @Description("Delete account")
+        @Story("Place Order: Register after Checkout")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Delete account for scenario 2")
         public void deleteAccountScenario2TC() {
                 new UserManagementAPI().deleteUserAccount(
                                 testData.getJsonData("email") + timeStamp + "@gmail.com",
                                 testData.getJsonData("password"))
                                 .verifyUserIsDeletedSuccessfully();
         }
-
-
 
         // Configurations
         @AfterMethod
@@ -313,13 +343,14 @@ public class InvoiceTest extends BaseTest {
                                 byte[] screenshot = page.screenshot();
                                 String screenshotName = result.getName() + " - Final State";
                                 Allure.addAttachment(screenshotName, "image/png",
-                                        new ByteArrayInputStream(screenshot), ".png");
+                                                new ByteArrayInputStream(screenshot), ".png");
                         } catch (Exception e) {
                                 System.err.println("Failed to capture screenshot: " + e.getMessage());
                         }
 
                         // Add completion timestamp
-                        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                        String timestamp = LocalDateTime.now()
+                                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                         Allure.parameter("Test End Time", timestamp);
                 }
         }

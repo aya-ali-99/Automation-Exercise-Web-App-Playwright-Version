@@ -9,9 +9,8 @@ import automationexercises.utils.dataReader.JsonReader;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
 
-@Epic("Automation Exercise ")
-@Feature("UI User Management")
-@Severity(SeverityLevel.CRITICAL)
+@Epic("Automation Exercise Website")
+@Feature("User Management")
 @Owner("Aya")
 public class RegisterTest extends BaseTest {
         String timeStamp = TimeManager.getSimpleTimestamp();
@@ -20,8 +19,9 @@ public class RegisterTest extends BaseTest {
         // Tests
 
         @Test
-        @Story("Valid User Register")
-        @Description("Verify user can sign up with valid data")
+        @Story("User Registration")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify that a new user can sign up with valid data")
         public void validSignUpTC() {
                 new SignupLoginPage(page).navigate()
                                 .enterSignupName(testData.getJsonData("signupName"))
@@ -55,8 +55,9 @@ public class RegisterTest extends BaseTest {
         }
 
         @Test
-        @Story("Invalid User Register")
-        @Description("Verify user can't sign up with existing email")
+        @Story("User Registration")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Verify that a user cannot sign up with an existing email address")
         public void verifyErrorMsgWhenAccountCreatedBefore() {
                 // Precondition: Create a user account
                 new UserManagementAPI().createRegisterUserAccount(
@@ -91,8 +92,9 @@ public class RegisterTest extends BaseTest {
         }
 
         @Test
-        @Story("Invalid User Register")
-        @Description("Verify user can't sign up with empty email")
+        @Story("User Registration")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Verify that a user cannot sign up with an empty email address")
         public void invalidSignUpWithEmptyEmailTC() {
                 new SignupLoginPage(page).navigate()
                                 .enterSignupName(testData.getJsonData("signupName"))
@@ -102,8 +104,9 @@ public class RegisterTest extends BaseTest {
         }
 
         @Test
-        @Story("Invalid User Register")
-        @Description("Verify user can't sign up with empty name")
+        @Story("User Registration")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Verify that a user cannot sign up with an empty name")
         public void invalidSignUpWithEmptyNameTC() {
                 new SignupLoginPage(page).navigate()
                                 .enterSignupName(testData.getJsonData("InvalidData.emptyName"))
@@ -113,8 +116,9 @@ public class RegisterTest extends BaseTest {
         }
 
         @Test
-        @Story("Invalid User Register")
-        @Description("Verify user can't sign up with wrong email")
+        @Story("User Registration")
+        @Severity(SeverityLevel.NORMAL)
+        @Description("Verify that a user cannot sign up with an invalid email format")
         public void invalidSignUpWithWrongEmailTC() {
                 new SignupLoginPage(page).navigate()
                                 .enterSignupName(testData.getJsonData("signupName"))

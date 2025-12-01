@@ -6,17 +6,17 @@ import automationexercises.utils.dataReader.JsonReader;
 import io.qameta.allure.*;
 import org.testng.annotations.Test;
 
-@Epic("Automation Exercise ")
-@Feature("UI Cart Management")
-@Story("Cart Details")
-@Severity(SeverityLevel.CRITICAL)
+@Epic("Automation Exercise Website")
+@Feature("Cart Management")
 @Owner("Aya")
 public class CartTest extends BaseTest {
         JsonReader testData = new JsonReader("cart-data");
 
         // Tests
         @Test
-        @Description("Verify product details in cart without login")
+        @Story("View Cart")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify that product details are correctly displayed in the cart without login")
         public void verifyProductDetailsInCartWithoutLogin() {
                 new ProductsPage(page)
                                 .navigate()
@@ -31,7 +31,9 @@ public class CartTest extends BaseTest {
         }
 
         @Test
-        @Description("Verify product is removed successfully from cart")
+        @Story("Remove from Cart")
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Verify that a product can be successfully removed from the cart")
         public void verifyProductIsRemovedSuccessfullyFromCart() {
                 new ProductsPage(page)
                                 .navigate()
