@@ -13,7 +13,7 @@ public class PlaywrightManager {
         if (playwright == null) {
             playwright = Playwright.create();
             BrowserType.LaunchOptions options = new BrowserType.LaunchOptions();
-            if(PropertyReader.getProperty("executionType") == "LocalHeadless"){
+            if(PropertyReader.getProperty("executionType").equalsIgnoreCase("LocalHeadless")){
                 options.setHeadless(true);
             }
             else {
