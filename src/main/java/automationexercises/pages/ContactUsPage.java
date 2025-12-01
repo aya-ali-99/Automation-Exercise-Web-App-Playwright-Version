@@ -1,6 +1,5 @@
 package automationexercises.pages;
 
-import automationexercises.pages.components.NavigationBarComponent;
 import automationexercises.utils.dataReader.PropertyReader;
 import automationexercises.utils.logs.LogsManager;
 import com.microsoft.playwright.Dialog;
@@ -10,7 +9,6 @@ import io.qameta.allure.Step;
 import org.testng.Assert;
 
 import java.nio.file.Paths;
-import java.util.concurrent.CompletableFuture;
 
 public class ContactUsPage {
 
