@@ -13,7 +13,12 @@ public class PlaywrightManager {
         if (playwright == null) {
             playwright = Playwright.create();
             BrowserType.LaunchOptions options = new BrowserType.LaunchOptions();
-            options.setHeadless(false);
+            if(PropertyReader.getProperty("executionType") == "LocalHeadless"){
+                options.setHeadless(true);
+            }
+            else {
+                options.setHeadless(false);
+            }
             options.setArgs(java.util.Arrays.asList("--start-maximized"));
             browser = playwright.chromium().launch(options);
         }

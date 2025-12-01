@@ -3,10 +3,10 @@ name: E2E Regression Pipeline
 on:
   push:
     branches:
-#      - master
+      - master
   pull_request:
     branches:
-#      - master
+      - master
 #  schedule:
 #    - cron: '* * * * *'
   workflow_dispatch:
