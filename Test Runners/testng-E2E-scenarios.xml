@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Automation Exercise E2E Scenarios Suite" verbose="1" parallel="tests" thread-count="1">
+    
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+
+    <test name="E2E Scenarios">
+        <classes>
+            <class name="automationexercises.tests.ui.E2eScenarioOne"/>
+            <class name="automationexercises.tests.ui.E2eScenarioTwo"/>
+        </classes>
+    </test>
+</suite>

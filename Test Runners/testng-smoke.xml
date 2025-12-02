@@ -1,11 +1,16 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Automation Exercise Smoke Suite" verbose="1">
-    <test name="Smoke Tests">
+
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+
+    <test name="Critical Path Smoke Tests">
         <classes>
             <class name="automationexercises.tests.ui.RegisterTest"/>
             <class name="automationexercises.tests.ui.LoginTest"/>
             <class name="automationexercises.tests.ui.ProductsTest"/>
-            <class name="automationexercises.tests.ui.CheckoutTest"/>
+            <class name="automationexercises.tests.ui.ContactUsTest"/>
         </classes>
     </test>
 </suite>

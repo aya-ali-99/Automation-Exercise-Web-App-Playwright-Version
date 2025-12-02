@@ -147,4 +147,4 @@ mvn allure:report
 **Aya Ali Mohamed**  
 *Software Testing Engineer | ITI Graduate*
 
-> This project was developed with ❤️ as part of the ITI Graduation requirements.
+> This project was developed with ❤️ as ITI Graduation Project.

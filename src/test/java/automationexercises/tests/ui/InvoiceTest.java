@@ -28,7 +28,7 @@ public class InvoiceTest extends BaseTest {
 
         // Place order scenario 1: register & login before checkout
 
-        @Test(groups = { "scenario_1" })
+        @Test
         @Story("Place Order: Register before Checkout")
         @Severity(SeverityLevel.CRITICAL)
         @Description("Register a new account for the order")
@@ -54,8 +54,7 @@ public class InvoiceTest extends BaseTest {
                                 .verifyUserIsCreatedSuccessfully();
         }
 
-        @Test(groups = { "scenario_1" },
-                dependsOnMethods = { "registerNewAccountTC" })
+        @Test(dependsOnMethods = { "registerNewAccountTC" })
         @Story("Place Order: Register before Checkout")
         @Severity(SeverityLevel.CRITICAL)
         @Description("Login to the newly created account")
@@ -67,8 +66,7 @@ public class InvoiceTest extends BaseTest {
                                 .verifyUserLabel(testData.getJsonData("name"));
         }
 
-        @Test(groups = { "scenario_1" },
-                dependsOnMethods = { "loginToAccountTC", "registerNewAccountTC" })
+        @Test(dependsOnMethods = { "loginToAccountTC", "registerNewAccountTC" })
         @Story("Place Order: Register before Checkout")
         @Severity(SeverityLevel.CRITICAL)
         @Description("Add a product to the cart")
@@ -85,8 +83,7 @@ public class InvoiceTest extends BaseTest {
                                                 testData.getJsonData("product.total"));
         }
 
-        @Test(groups = { "scenario_1" },
-                dependsOnMethods = { "addProductToCartTC", "loginToAccountTC",
+        @Test(dependsOnMethods = { "addProductToCartTC", "loginToAccountTC",
                         "registerNewAccountTC" })
         @Story("Place Order: Register before Checkout")
         @Severity(SeverityLevel.CRITICAL)
@@ -122,8 +119,7 @@ public class InvoiceTest extends BaseTest {
 
         }
 
-        @Test(groups = { "scenario_1" },
-                dependsOnMethods = { "checkoutTC", "addProductToCartTC", "loginToAccountTC",
+        @Test(dependsOnMethods = { "checkoutTC", "addProductToCartTC", "loginToAccountTC",
                         "registerNewAccountTC" })
         @Story("Place Order: Register before Checkout")
         @Severity(SeverityLevel.CRITICAL)
@@ -142,8 +138,7 @@ public class InvoiceTest extends BaseTest {
                                 .clickDownloadInvoiceBtn();
         }
 
-        @Test(groups = { "scenario_1" },
-                dependsOnMethods = { "paymentTC", "checkoutTC", "addProductToCartTC",
+        @Test(dependsOnMethods = { "paymentTC", "checkoutTC", "addProductToCartTC",
                         "loginToAccountTC", "registerNewAccountTC" })
         @Story("Place Order: Register before Checkout")
         @Severity(SeverityLevel.CRITICAL)
@@ -155,8 +150,7 @@ public class InvoiceTest extends BaseTest {
                                                 testData.getJsonData("invoiceName"));
         }
 
-        @Test(groups = { "scenario_1" },
-                dependsOnMethods = { "verifyInvoiceFileTC", "paymentTC", "checkoutTC",
+        @Test(dependsOnMethods = { "verifyInvoiceFileTC", "paymentTC", "checkoutTC",
                         "addProductToCartTC", "loginToAccountTC", "registerNewAccountTC" })
         @Story("Place Order: Register before Checkout")
         @Severity(SeverityLevel.NORMAL)
@@ -168,170 +162,6 @@ public class InvoiceTest extends BaseTest {
                                 .verifyUserIsDeletedSuccessfully();
         }
 
-        // Place order scenario 2: register & login before checkout
-
-        @Test(groups = { "scenario_2" },
-                dependsOnGroups = { "scenario_1" })
-        @Story("Place Order: Register after Checkout")
-        @Severity(SeverityLevel.CRITICAL)
-        @Description("Add product to cart before login")
-        public void addProductToCartBeforeLoginTC() {
-                new ProductsPage(page)
-                                .navigate()
-                                .clickOnAddToCart(testData.getJsonData("product.name"))
-                                .validateItemAddedLabel(testData.getJsonData("messages.cartAdded"))
-                                .clickOnViewCart()
-                                .verifyProductDetailsInCart(
-                                                testData.getJsonData("product.name"),
-                                                testData.getJsonData("product.price"),
-                                                testData.getJsonData("product.quantity"),
-                                                testData.getJsonData("product.total"));
-        }
-
-        @Test(groups = { "scenario_2" },
-                dependsOnGroups = { "scenario_1" },
-                dependsOnMethods = {
-                        "addProductToCartBeforeLoginTC" })
-        @Story("Place Order: Register after Checkout")
-        @Severity(SeverityLevel.CRITICAL)
-        @Description("Proceed to checkout without login")
-        public void checkoutBeforeLoginTC() {
-                new CartPage(page)
-                                .navigate()
-                                .clickOnProceedToCheckoutButtonWithoutLogin()
-                                .clickOnRegisterLoginButton()
-                                .verifySignupLabelVisible();
-        }
-
-        @Test(groups = { "scenario_2" },
-                dependsOnGroups = { "scenario_1" },
-                dependsOnMethods = {
-                        "addProductToCartBeforeLoginTC", "checkoutBeforeLoginTC" })
-        @Story("Place Order: Register after Checkout")
-        @Severity(SeverityLevel.CRITICAL)
-        @Description("Sign up with valid data during checkout")
-        public void validSignUpTC() {
-                timeStamp += 1;
-                new SignupLoginPage(page)
-                                .enterSignupName(testData.getJsonData("name"))
-                                .enterSignupEmail(testData.getJsonData("email") + timeStamp + "@gmail.com")
-                                .clickSignupButton();
-                new SignupPage(page)
-                                .enterPassword(testData.getJsonData("password"))
-                                .selectBirtDate(testData.getJsonData("day"),
-                                                testData.getJsonData("month"),
-                                                testData.getJsonData("year"))
-                                .selectNewsletter()
-                                .selectSpecialOffers()
-                                .selectTitle(testData.getJsonData("titleFemale"))
-                                .enterFirstName(testData.getJsonData("firstName"))
-                                .enterLastName(testData.getJsonData("lastName"))
-                                .enterCompany(testData.getJsonData("companyName"))
-                                .enterAddress1(testData.getJsonData("address1"))
-                                .enterAddress2(testData.getJsonData("address2"))
-                                .selectCountry(testData.getJsonData("country"))
-                                .enterState(testData.getJsonData("state"))
-                                .enterCity(testData.getJsonData("city"))
-                                .enterZipcode(testData.getJsonData("zipcode"))
-                                .enterMobileNumber(testData.getJsonData("mobileNumber"))
-                                .clickCreateAccountButton()
-                                .verifyAccountCreatedLabel();
-
-        }
-
-        @Test(groups = { "scenario_2" },
-                dependsOnGroups = { "scenario_1" },
-                dependsOnMethods = {
-                        "addProductToCartBeforeLoginTC", "checkoutBeforeLoginTC", "validSignUpTC" })
-        @Story("Place Order: Register after Checkout")
-        @Severity(SeverityLevel.CRITICAL)
-        @Description("Proceed to checkout after registering")
-        public void checkoutAfterLoginTC() {
-                new CartPage(page)
-                                .navigate()
-                                .verifyProductDetailsInCart(
-                                                testData.getJsonData("product.name"),
-                                                testData.getJsonData("product.price"),
-                                                testData.getJsonData("product.quantity"),
-                                                testData.getJsonData("product.total"))
-                                .clickOnProceedToCheckoutButton()
-                                .verifyDeliveryAddress(
-                                                testData.getJsonData("titleFemale"),
-                                                testData.getJsonData("firstName"),
-                                                testData.getJsonData("lastName"),
-                                                testData.getJsonData("companyName"),
-                                                testData.getJsonData("address1"),
-                                                testData.getJsonData("address2"),
-                                                testData.getJsonData("city"),
-                                                testData.getJsonData("state"),
-                                                testData.getJsonData("zipcode"),
-                                                testData.getJsonData("country"),
-                                                testData.getJsonData("mobileNumber"))
-                                .verifyBillingAddress(
-                                                testData.getJsonData("titleFemale"),
-                                                testData.getJsonData("firstName"),
-                                                testData.getJsonData("lastName"),
-                                                testData.getJsonData("companyName"),
-                                                testData.getJsonData("address1"),
-                                                testData.getJsonData("address2"),
-                                                testData.getJsonData("city"),
-                                                testData.getJsonData("state"),
-                                                testData.getJsonData("zipcode"),
-                                                testData.getJsonData("country"),
-                                                testData.getJsonData("mobileNumber"));
-        }
-
-        @Test(groups = { "scenario_2" },
-                dependsOnGroups = { "scenario_1" },
-                dependsOnMethods = {
-                        "addProductToCartBeforeLoginTC", "checkoutBeforeLoginTC", "validSignUpTC",
-                        "checkoutAfterLoginTC" })
-        @Story("Place Order: Register after Checkout")
-        @Severity(SeverityLevel.CRITICAL)
-        @Description("Complete payment for scenario 2")
-        public void paymentScenario2TC() {
-                new CheckoutPage(page)
-                                .clickPlaceOrderBtn()
-                                .fillCardInfo(
-                                                testData.getJsonData("card.cardName"),
-                                                testData.getJsonData("card.cardNumber"),
-                                                testData.getJsonData("card.cvc"),
-                                                testData.getJsonData("card.exMonth"),
-                                                testData.getJsonData("card.exYear"))
-                                .clickPayAndConfirmBtn()
-                                .verifySuccessMessage()
-                                .clickDownloadInvoiceBtn();
-        }
-
-        @Test(groups = { "scenario_2" },
-                dependsOnGroups = { "scenario_1" },
-                dependsOnMethods = {
-                        "addProductToCartBeforeLoginTC", "checkoutBeforeLoginTC", "validSignUpTC",
-                        "checkoutAfterLoginTC", "paymentScenario2TC" })
-        @Story("Place Order: Register after Checkout")
-        @Severity(SeverityLevel.CRITICAL)
-        @Description("Verify invoice file for scenario 2")
-        public void verifyInvoiceFileScenario2TC() {
-                new PaymentPage(page)
-                                .clickDownloadInvoiceBtn()
-                                .verifyDownloadInvoiceFile(
-                                                testData.getJsonData("invoiceName"));
-        }
-
-        @Test(groups = { "scenario_2" },
-                dependsOnGroups = { "scenario_1" },
-                dependsOnMethods = {
-                        "addProductToCartBeforeLoginTC", "checkoutBeforeLoginTC", "validSignUpTC",
-                        "checkoutAfterLoginTC", "paymentScenario2TC", "verifyInvoiceFileScenario2TC" })
-        @Story("Place Order: Register after Checkout")
-        @Severity(SeverityLevel.NORMAL)
-        @Description("Delete account for scenario 2")
-        public void deleteAccountScenario2TC() {
-                new UserManagementAPI().deleteUserAccount(
-                                testData.getJsonData("email") + timeStamp + "@gmail.com",
-                                testData.getJsonData("password"))
-                                .verifyUserIsDeletedSuccessfully();
-        }
 
         // Configurations
         @AfterMethod
