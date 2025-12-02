@@ -1,17 +1,17 @@
 {
   "product1" :
   {
-    "name": "Men Tshirt",
-    "price": "Rs. 400",
+    "name": "Winter Top",
+    "price": "Rs. 600",
     "quantity": "1",
-    "total": "Rs. 400"
+    "total": "Rs. 600"
   },
   "searchedProduct" :
   {
-    "name": "Blue Top",
-    "price": "Rs. 500",
+    "name": "Madame Top For Women",
+    "price": "Rs. 1000",
     "quantity": "1",
-    "total": "Rs. 500"
+    "total": "Rs. 1000"
   },
   "messages" :
   {

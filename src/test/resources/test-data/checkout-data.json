@@ -19,10 +19,10 @@
   "mobileNumber": "1234567890",
   "product" :
   {
-    "name": "Men Tshirt",
-    "price": "Rs. 400",
+    "name": "Winter Top",
+    "price": "Rs. 600",
     "quantity": "1",
-    "total": "Rs. 400"
+    "total": "Rs. 600"
   },
   "card":
   {
