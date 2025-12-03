@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Epic("Automation Exercise Website")
-@Feature("Invoice Management")
+@Feature("E2E Scenarios")
 @Owner("Aya")
 public class E2eScenarioOne extends BaseTest {
     String timeStamp = TimeManager.getSimpleTimestamp();

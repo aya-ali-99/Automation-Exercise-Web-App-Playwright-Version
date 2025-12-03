@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Epic("Automation Exercise Website")
-@Feature("Invoice Management")
+@Feature("E2E Scenarios")
 @Owner("Aya")
 public class E2eScenarioTwo extends BaseTest {
     String timeStamp = TimeManager.getSimpleTimestamp();
@@ -78,7 +78,6 @@ public class E2eScenarioTwo extends BaseTest {
     @Description("Proceed to checkout without login")
     public void checkoutBeforeLoginTC() {
         new CartPage(page)
-                .navigate()
                 .clickOnProceedToCheckoutButtonWithoutLogin()
                 .clickOnRegisterLoginButton()
                 .verifySignupLabelVisible();

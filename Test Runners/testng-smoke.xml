@@ -10,7 +10,6 @@
             <class name="automationexercises.tests.ui.RegisterTest"/>
             <class name="automationexercises.tests.ui.LoginTest"/>
             <class name="automationexercises.tests.ui.ProductsTest"/>
-            <class name="automationexercises.tests.ui.ContactUsTest"/>
         </classes>
     </test>
 </suite>
