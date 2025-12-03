@@ -3,8 +3,8 @@
 
     <test name="E2E Scenarios">
         <classes>
-            <class name="automationexercises.tests.ui.E2eScenarioOne"/>
-            <class name="automationexercises.tests.ui.E2eScenarioTwo"/>
+            <class name="automationexercises.tests.ui.E2eScenarioOneTest"/>
+            <class name="automationexercises.tests.ui.E2eScenarioTwoTest"/>
         </classes>
     </test>
 </suite>

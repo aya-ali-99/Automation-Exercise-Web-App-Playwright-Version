@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter;
 @Epic("Automation Exercise Website")
 @Feature("E2E Scenarios")
 @Owner("Aya")
-public class E2eScenarioOne extends BaseTest {
+public class E2eScenarioOneTest extends BaseTest {
     String timeStamp = TimeManager.getSimpleTimestamp();
     JsonReader testData = new JsonReader("checkout-data");
 
